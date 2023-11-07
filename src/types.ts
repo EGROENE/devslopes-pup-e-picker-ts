@@ -1,1 +1,7 @@
-// Add your own custom types in here
+export interface Dog {
+  name: string;
+  image: string;
+  description: string;
+  isFavorite: boolean;
+  id: string;
+}
