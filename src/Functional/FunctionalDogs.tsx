@@ -1,18 +1,32 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { DogCard } from "../Shared/DogCard";
-import { getAllDogs } from "../Shared/Requests";
+import { Dog } from "../types";
 
-// Right now these dogs are constant, but in reality we should be getting these from our server
-export const FunctionalDogs = () => {
-  const [allDogs, setAllDogs] = useState([]);
+interface FunctionalDogsProps {
+  allDogs: Dog[];
+  dogsAreDisplayed: boolean;
+  favsAreDisplayed: boolean | null;
+  setFavsAreDisplayed: Dispatch<SetStateAction<boolean | null>>;
+}
 
-  useEffect(() => {
-    getAllDogs().then(setAllDogs);
-  }, []);
+export const FunctionalDogs = ({
+  allDogs: allDogs,
+  dogsAreDisplayed: dogsAreDisplayed,
+  favsAreDisplayed: favsAreDisplayed,
+}: FunctionalDogsProps) => {
+  // Set value of displayedDogs (used to populate page w/ dog cards):
+  let displayedDogs: Dog[];
+  if (dogsAreDisplayed && favsAreDisplayed) {
+    displayedDogs = allDogs.filter((dog) => dog.isFavorite);
+  } else if (dogsAreDisplayed && favsAreDisplayed === false) {
+    displayedDogs = displayedDogs = allDogs.filter((dog) => !dog.isFavorite);
+  } else {
+    displayedDogs = allDogs;
+  }
 
   return (
     <>
-      {allDogs.map(
+      {displayedDogs.map(
         (dog: {
           id: string;
           image: string;
@@ -29,12 +43,15 @@ export const FunctionalDogs = () => {
               name: dog.name,
             }}
             key={dog.id}
+            // onClick of trash, dog is deleted from 'dogs' array in db.json
             onTrashIconClick={() => {
               alert("clicked trash");
             }}
+            // onClick of heart, add to favorited (PATCH request made to update isFavorite to true)
             onHeartClick={() => {
               alert("clicked heart");
             }}
+            // onClick of heart, add to unfavorited (PATCH request made to update isFavorite to false)
             onEmptyHeartClick={() => {
               alert("clicked empty heart");
             }}
