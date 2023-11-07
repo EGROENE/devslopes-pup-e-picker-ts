@@ -8,10 +8,13 @@ export function FunctionalApp() {
       <header>
         <h1>pup-e-picker (Functional)</h1>
       </header>
-      {/* FunctionalSection is the nav bar */}
-      <FunctionalSection />
-      <FunctionalDogs />
-      <FunctionalCreateDogForm />
+      <section id="main-section">
+        <FunctionalSection />
+        <div className="content-container">
+          <FunctionalDogs />
+          <FunctionalCreateDogForm />
+        </div>
+      </section>
     </div>
   );
 }
