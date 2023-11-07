@@ -1,8 +1,20 @@
 // you can use this type for react children if you so choose
-import { ReactNode } from "react";
+import { ReactNode, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
+import { Dog } from "../types";
 
-export const FunctionalSection = () => {
+interface FunctionalSectionProps {
+  allDogs: Dog[];
+  setDogsAreDisplayed: Dispatch<SetStateAction<boolean>>;
+}
+
+export const FunctionalSection = ({
+  allDogs: allDogs,
+  setDogsAreDisplayed: setDogsAreDisplayed,
+}: FunctionalSectionProps) => {
+  const favsTotal = allDogs.filter((dog) => dog.isFavorite).length;
+  const unfavsTotal = allDogs.filter((dog) => !dog.isFavorite).length;
+
   return (
     <div className="container-header">
       <div className="container-label">Dogs: </div>
@@ -10,14 +22,11 @@ export const FunctionalSection = () => {
         Change to Class
       </Link>
       <div className="selectors">
-        {/* This should display the favorited count */}
         <div className={`selector active`} onClick={() => {}}>
-          favorited ( 12 )
+          favorited ( {favsTotal} )
         </div>
-
-        {/* This should display the unfavorited count */}
         <div className={`selector`} onClick={() => {}}>
-          unfavorited ( 25 )
+          unfavorited ( {unfavsTotal} )
         </div>
         <div className={`selector`} onClick={() => {}}>
           create dog
