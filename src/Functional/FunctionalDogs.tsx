@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react";
 import { DogCard } from "../Shared/DogCard";
 import { dogPictures } from "../dog-pictures";
+import { getAllDogs } from "../Shared/Requests";
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
 export const FunctionalDogs = () => {
+  const [allDogs, setAllDogs] = useState([]);
+
+  useEffect(() => {
+    getAllDogs().then(setAllDogs);
+  }, []);
+
   return (
     //  the "<> </>"" are called react fragments, it's like adding all the html inside
     // without adding an actual html element
+    // Map through allDogs, creating DogCard for each one
     <>
+      {}
       <DogCard
         dog={{
           id: 1,
