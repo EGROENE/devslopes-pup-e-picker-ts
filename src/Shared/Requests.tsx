@@ -13,3 +13,35 @@ export const deleteDog = (dogID: number): Promise<Response> => {
     redirect: "follow",
   });
 };
+
+export const addToFavorites = (dogID: number) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "isFavorite": true,
+  });
+
+  return fetch(`http://localhost:3000/dogs/${dogID}`, {
+    method: "PATCH",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  });
+};
+
+export const removeFromFavorites = (dogID: number) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "isFavorite": false,
+  });
+
+  return fetch(`http://localhost:3000/dogs/${dogID}`, {
+    method: "PATCH",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  });
+};

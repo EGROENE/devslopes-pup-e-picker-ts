@@ -1,7 +1,12 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { DogCard } from "../Shared/DogCard";
 import { Dog } from "../types";
-import { deleteDog, getAllDogs } from "../Shared/Requests";
+import {
+  deleteDog,
+  getAllDogs,
+  addToFavorites,
+  removeFromFavorites,
+} from "../Shared/Requests";
 
 interface FunctionalDogsProps {
   allDogs: Dog[];
@@ -60,11 +65,23 @@ export const FunctionalDogs = ({
             }}
             // onClick of heart, add to favorited (PATCH request made to update isFavorite to true)
             onHeartClick={() => {
-              alert("clicked heart");
+              removeFromFavorites(Number(dog.id))
+                .then(() => setIsLoading(true))
+                .then(() =>
+                  getAllDogs()
+                    .then(setAllDogs)
+                    .then(() => setIsLoading(false))
+                );
             }}
             // onClick of heart, add to unfavorited (PATCH request made to update isFavorite to false)
             onEmptyHeartClick={() => {
-              alert("clicked empty heart");
+              addToFavorites(Number(dog.id))
+                .then(() => setIsLoading(true))
+                .then(() =>
+                  getAllDogs()
+                    .then(setAllDogs)
+                    .then(() => setIsLoading(false))
+                );
             }}
             isLoading={isLoading}
           />
