@@ -22,6 +22,8 @@ export const FunctionalSection = ({
   const favsTotal = allDogs.filter((dog) => dog.isFavorite).length;
   const unfavsTotal = allDogs.filter((dog) => !dog.isFavorite).length;
 
+  const dataHasBeenFetched: boolean = allDogs.length > 0;
+
   return (
     <div className="container-header">
       <div className="container-label">Dogs: </div>
@@ -29,7 +31,8 @@ export const FunctionalSection = ({
         Change to Class
       </Link>
       <div className="selectors">
-        <div
+        <button
+          disabled={!dataHasBeenFetched}
           className={
             favsAreDisplayed && dogsAreDisplayed
               ? "selector active"
@@ -49,8 +52,9 @@ export const FunctionalSection = ({
           }}
         >
           favorited ( {favsTotal} )
-        </div>
-        <div
+        </button>
+        <button
+          disabled={!dataHasBeenFetched}
           className={
             favsAreDisplayed === false && dogsAreDisplayed
               ? "selector active"
@@ -69,8 +73,9 @@ export const FunctionalSection = ({
           }}
         >
           unfavorited ( {unfavsTotal} )
-        </div>
-        <div
+        </button>
+        <button
+          disabled={!dataHasBeenFetched}
           className={!dogsAreDisplayed ? "selector active" : "selector"}
           onClick={() => {
             dogsAreDisplayed
@@ -79,7 +84,7 @@ export const FunctionalSection = ({
           }}
         >
           create dog
-        </div>
+        </button>
       </div>
     </div>
   );
