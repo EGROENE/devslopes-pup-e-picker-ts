@@ -18,6 +18,8 @@ export function FunctionalApp() {
 
   const [favsAreDisplayed, setFavsAreDisplayed] = useState<boolean | null>(null);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   return (
     <div className="App" style={{ backgroundColor: "skyblue" }}>
       <header>
@@ -39,9 +41,14 @@ export function FunctionalApp() {
               dogsAreDisplayed={dogsAreDisplayed}
               favsAreDisplayed={favsAreDisplayed}
               setFavsAreDisplayed={setFavsAreDisplayed}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           ) : (
-            <FunctionalCreateDogForm />
+            <FunctionalCreateDogForm
+              setAllDogs={setAllDogs}
+              setIsLoading={setIsLoading}
+            />
           )}
         </div>
       </section>
