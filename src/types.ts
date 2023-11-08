@@ -2,6 +2,6 @@ export interface Dog {
   name: string;
   image: string;
   description: string;
-  isFavorite: boolean;
-  id: string;
+  isFavorite?: boolean;
+  id: number;
 }
