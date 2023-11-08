@@ -16,9 +16,7 @@ export function FunctionalApp() {
   // Pass setter to FunctionalSection. There, call on click of 'favs', 'unfavs', & 'create dog' btns
   const [dogsAreDisplayed, setDogsAreDisplayed] = useState<boolean>(true);
 
-  const [favsAreDisplayed, setFavsAreDisplayed] = useState<boolean | null>(
-    null
-  );
+  const [favsAreDisplayed, setFavsAreDisplayed] = useState<boolean | null>(null);
 
   return (
     <div className="App" style={{ backgroundColor: "skyblue" }}>
@@ -37,6 +35,7 @@ export function FunctionalApp() {
           {dogsAreDisplayed ? (
             <FunctionalDogs
               allDogs={allDogs}
+              setAllDogs={setAllDogs}
               dogsAreDisplayed={dogsAreDisplayed}
               favsAreDisplayed={favsAreDisplayed}
               setFavsAreDisplayed={setFavsAreDisplayed}

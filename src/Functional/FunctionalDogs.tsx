@@ -1,9 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { DogCard } from "../Shared/DogCard";
 import { Dog } from "../types";
+import { deleteDog, getAllDogs } from "../Shared/Requests";
 
 interface FunctionalDogsProps {
   allDogs: Dog[];
+  setAllDogs: Dispatch<SetStateAction<Dog[]>>;
   dogsAreDisplayed: boolean;
   favsAreDisplayed: boolean | null;
   setFavsAreDisplayed: Dispatch<SetStateAction<boolean | null>>;
@@ -11,6 +13,7 @@ interface FunctionalDogsProps {
 
 export const FunctionalDogs = ({
   allDogs: allDogs,
+  setAllDogs: setAllDogs,
   dogsAreDisplayed: dogsAreDisplayed,
   favsAreDisplayed: favsAreDisplayed,
 }: FunctionalDogsProps) => {
@@ -23,6 +26,8 @@ export const FunctionalDogs = ({
   } else {
     displayedDogs = allDogs;
   }
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <>
@@ -45,7 +50,13 @@ export const FunctionalDogs = ({
             key={dog.id}
             // onClick of trash, dog is deleted from 'dogs' array in db.json
             onTrashIconClick={() => {
-              alert("clicked trash");
+              deleteDog(Number(dog.id))
+                .then(() => setIsLoading(true))
+                .then(() =>
+                  getAllDogs()
+                    .then(setAllDogs)
+                    .then(() => setIsLoading(false))
+                );
             }}
             // onClick of heart, add to favorited (PATCH request made to update isFavorite to true)
             onHeartClick={() => {
@@ -55,7 +66,7 @@ export const FunctionalDogs = ({
             onEmptyHeartClick={() => {
               alert("clicked empty heart");
             }}
-            isLoading={false}
+            isLoading={isLoading}
           />
         )
       )}
