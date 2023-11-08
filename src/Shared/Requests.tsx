@@ -1,3 +1,5 @@
+import { Dog } from "../types";
+
 // Method to fetch all dogs from dogs array in db.json:
 export const getAllDogs = (): Promise<any> => {
   return fetch("http://localhost:3000/dogs").then((response) => response.json());
@@ -14,7 +16,7 @@ export const deleteDog = (dogID: string): Promise<Response> => {
   });
 };
 
-export const addToFavorites = (dogID: string) => {
+export const addToFavorites = (id: number) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -22,7 +24,7 @@ export const addToFavorites = (dogID: string) => {
     "isFavorite": true,
   });
 
-  return fetch(`http://localhost:3000/dogs/${dogID}`, {
+  return fetch(`http://localhost:3000/dogs/${id}`, {
     method: "PATCH",
     headers: myHeaders,
     body: raw,
@@ -30,7 +32,7 @@ export const addToFavorites = (dogID: string) => {
   });
 };
 
-export const removeFromFavorites = (dogID: string) => {
+export const removeFromFavorites = (id: number) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -38,8 +40,29 @@ export const removeFromFavorites = (dogID: string) => {
     "isFavorite": false,
   });
 
-  return fetch(`http://localhost:3000/dogs/${dogID}`, {
+  return fetch(`http://localhost:3000/dogs/${id}`, {
     method: "PATCH",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  });
+};
+
+// Maybe take in object that contains the characteristics. This will correlate with the state object in
+// FunctionalCreateDogForm that will be passed to it.
+export const createDog = (newDogCharacteristics: Dog) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "name": newDogCharacteristics.name,
+    "image": newDogCharacteristics.image,
+    "description": newDogCharacteristics.description,
+    "id": 0,
+  });
+
+  return fetch("http://localhost:3000/dogs?Content-Type=application/json", {
+    method: "POST",
     headers: myHeaders,
     body: raw,
     redirect: "follow",
