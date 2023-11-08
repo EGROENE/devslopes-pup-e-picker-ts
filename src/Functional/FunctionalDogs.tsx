@@ -55,7 +55,7 @@ export const FunctionalDogs = ({
             key={dog.id}
             // onClick of trash, dog is deleted from 'dogs' array in db.json
             onTrashIconClick={() => {
-              deleteDog(Number(dog.id))
+              deleteDog(dog.id)
                 .then(() => setIsLoading(true))
                 .then(() =>
                   getAllDogs()
@@ -65,7 +65,7 @@ export const FunctionalDogs = ({
             }}
             // onClick of heart, add to favorited (PATCH request made to update isFavorite to true)
             onHeartClick={() => {
-              removeFromFavorites(Number(dog.id))
+              removeFromFavorites(dog.id)
                 .then(() => setIsLoading(true))
                 .then(() =>
                   getAllDogs()
@@ -75,7 +75,7 @@ export const FunctionalDogs = ({
             }}
             // onClick of heart, add to unfavorited (PATCH request made to update isFavorite to false)
             onEmptyHeartClick={() => {
-              addToFavorites(Number(dog.id))
+              addToFavorites(dog.id)
                 .then(() => setIsLoading(true))
                 .then(() =>
                   getAllDogs()
