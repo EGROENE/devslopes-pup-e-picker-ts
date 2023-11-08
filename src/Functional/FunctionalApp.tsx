@@ -28,7 +28,10 @@ export function FunctionalApp() {
       <section id="main-section">
         <FunctionalSection
           allDogs={allDogs}
+          dogsAreDisplayed={dogsAreDisplayed}
           setDogsAreDisplayed={setDogsAreDisplayed}
+          favsAreDisplayed={favsAreDisplayed}
+          setFavsAreDisplayed={setFavsAreDisplayed}
         />
         <div className="content-container">
           {dogsAreDisplayed ? (
