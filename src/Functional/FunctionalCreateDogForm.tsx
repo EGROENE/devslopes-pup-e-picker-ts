@@ -54,6 +54,7 @@ export const FunctionalCreateDogForm = ({
       <h4>Create a New Dog</h4>
       <label htmlFor="name">Dog Name</label>
       <input
+        required
         value={newDogName}
         type="text"
         disabled={isLoading}

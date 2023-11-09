@@ -83,6 +83,7 @@ export class ClassCreateDogForm extends Component<
         <h4>Create a New Dog</h4>
         <label htmlFor="name">Dog Name</label>
         <input
+          required
           value={this.state.newDogCharacteristics.newDogName}
           type="text"
           onChange={(e) => this.setNewDogName(e.target.value)}
