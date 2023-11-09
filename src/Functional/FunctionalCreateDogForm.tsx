@@ -9,15 +9,19 @@ const defaultSelectedImage = dogPictures.BlueHeeler;
 
 interface FunctionalCreateDogFormProps {
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
+  isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setDogsAreDisplayed: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const FunctionalCreateDogForm = ({
   setAllDogs: setAllDogs,
+  isLoading: isLoading,
   setIsLoading: setIsLoading,
+  setDogsAreDisplayed: setDogsAreDisplayed,
 }: FunctionalCreateDogFormProps) => {
   const [newDogName, setNewDogName] = useState<string>("");
-  const [newDogImage, setNewDogImage] = useState<string>("");
+  const [newDogImage, setNewDogImage] = useState<string>(defaultSelectedImage);
   const [newDogDescription, setNewDogDescription] = useState<string>("");
 
   const newDogCharacteristics: Dog = {
@@ -40,24 +44,30 @@ export const FunctionalCreateDogForm = ({
             getAllDogs()
               .then(setAllDogs)
               .then(() => setIsLoading(false))
-          );
+          )
+          .then(() => setNewDogName(""))
+          .then(() => setNewDogDescription(""))
+          .then(() => setNewDogImage(defaultSelectedImage))
+          .then(() => setDogsAreDisplayed(true));
       }}
     >
       <h4>Create a New Dog</h4>
       <label htmlFor="name">Dog Name</label>
       <input
+        value={newDogName}
         type="text"
-        disabled={false}
-        onChange={(e) => setNewDogName(e.target.value.trim())}
+        disabled={isLoading}
+        onChange={(e) => setNewDogName(e.target.value)}
       />
       <label htmlFor="description">Dog Description</label>
       <textarea
+        value={newDogDescription}
         name=""
         id=""
         cols={80}
         rows={10}
-        disabled={false}
-        onChange={(e) => setNewDogDescription(e.target.value.trim())}
+        disabled={isLoading}
+        onChange={(e) => setNewDogDescription(e.target.value)}
       ></textarea>
       <label htmlFor="picture">Select an Image</label>
       <select id="" onChange={(e) => setNewDogImage(e.target.value)}>
