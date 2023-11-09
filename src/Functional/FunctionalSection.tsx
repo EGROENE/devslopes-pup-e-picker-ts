@@ -1,5 +1,5 @@
 // you can use this type for react children if you so choose
-import { ReactNode, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { Dog } from "../types";
 import { FunctionalDogs } from "./FunctionalDogs";
