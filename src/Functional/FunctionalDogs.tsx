@@ -7,6 +7,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../Shared/Requests";
+import toast from "react-hot-toast";
 
 interface FunctionalDogsProps {
   allDogs: Dog[];
@@ -56,6 +57,7 @@ export const FunctionalDogs = ({
                 getAllDogs()
                   .then(setAllDogs)
                   .then(() => setIsLoading(false))
+                  .then(() => toast.error("Dog removed"))
               );
           }}
           // onClick of heart, add to favorited (PATCH request made to update isFavorite to true)
@@ -66,6 +68,7 @@ export const FunctionalDogs = ({
                 getAllDogs()
                   .then(setAllDogs)
                   .then(() => setIsLoading(false))
+                  .then(() => toast.error("Dog removed from favorites"))
               );
           }}
           // onClick of heart, add to unfavorited (PATCH request made to update isFavorite to false)
@@ -76,6 +79,7 @@ export const FunctionalDogs = ({
                 getAllDogs()
                   .then(setAllDogs)
                   .then(() => setIsLoading(false))
+                  .then(() => toast.success("Dog added to favorites"))
               );
           }}
           isLoading={isLoading}

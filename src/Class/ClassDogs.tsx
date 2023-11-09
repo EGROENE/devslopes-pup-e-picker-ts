@@ -7,6 +7,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../Shared/Requests";
+import toast from "react-hot-toast";
 
 interface ClassDogsProps {
   allDogs: Dog[];
@@ -55,6 +56,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
                   getAllDogs()
                     .then(setAllDogs)
                     .then(() => setIsLoading(false))
+                    .then(() => toast.error("Dog removed"))
                 );
             }}
             onHeartClick={() => {
@@ -64,6 +66,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
                   getAllDogs()
                     .then(setAllDogs)
                     .then(() => setIsLoading(false))
+                    .then(() => toast.error("Dog removed from favorites"))
                 );
             }}
             onEmptyHeartClick={() => {
@@ -73,6 +76,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
                   getAllDogs()
                     .then(setAllDogs)
                     .then(() => setIsLoading(false))
+                    .then(() => toast.success("Dog added to favorites"))
                 );
             }}
             isLoading={isLoading}
