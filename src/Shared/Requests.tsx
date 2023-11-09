@@ -16,7 +16,7 @@ export const deleteDog = (dogID: string): Promise<Response> => {
   });
 };
 
-export const addToFavorites = (id: number) => {
+export const addToFavorites = (id: number): Promise<Response> => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -32,7 +32,7 @@ export const addToFavorites = (id: number) => {
   });
 };
 
-export const removeFromFavorites = (id: number) => {
+export const removeFromFavorites = (id: number): Promise<Response> => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -50,7 +50,7 @@ export const removeFromFavorites = (id: number) => {
 
 // Maybe take in object that contains the characteristics. This will correlate with the state object in
 // FunctionalCreateDogForm that will be passed to it.
-export const createDog = (newDogCharacteristics: Dog) => {
+export const createDog = (newDogCharacteristics: Dog): Promise<Response> => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
