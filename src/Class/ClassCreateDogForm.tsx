@@ -1,30 +1,107 @@
 import { Component } from "react";
 import { dogPictures } from "../dog-pictures";
+import { Dog, newDogCharacteristics } from "../types";
+import { createDog } from "../Shared/Requests";
+import { getAllDogs } from "../Shared/Requests";
 
-export class ClassCreateDogForm extends Component {
+const defaultSelectedImage = dogPictures.BlueHeeler;
+
+interface ClassCreateDogFormState {
+  newDogCharacteristics: newDogCharacteristics;
+}
+
+interface ClassCreateDogFormProps {
+  setAllDogs: (newValue: Dog[]) => void;
+  isLoading: boolean;
+  setIsLoading: (newValue: boolean) => void;
+  setDogsAreDisplayed: (newValue: boolean) => void;
+}
+
+export class ClassCreateDogForm extends Component<
+  ClassCreateDogFormProps,
+  ClassCreateDogFormState
+> {
+  state = {
+    newDogCharacteristics: {
+      newDogName: "",
+      newDogImage: defaultSelectedImage,
+      newDogDescription: "",
+      isFavorite: false,
+      id: 0,
+    },
+  };
+
+  setNewDogName = (newValue: string) => {
+    this.setState((prevState) => ({
+      newDogCharacteristics: {
+        ...prevState.newDogCharacteristics,
+        newDogName: newValue,
+      },
+    }));
+  };
+
+  setNewDogImage = (newValue: string) => {
+    this.setState((prevState) => ({
+      newDogCharacteristics: {
+        ...prevState.newDogCharacteristics,
+        newDogImage: newValue,
+      },
+    }));
+  };
+
+  setNewDogDescription = (newValue: string) => {
+    this.setState((prevState) => ({
+      newDogCharacteristics: {
+        ...prevState.newDogCharacteristics,
+        newDogDescription: newValue,
+      },
+    }));
+  };
+
   render() {
+    const { setAllDogs, isLoading, setIsLoading, setDogsAreDisplayed } = this.props;
+
     return (
       <form
         action=""
         id="create-dog-form"
         onSubmit={(e) => {
           e.preventDefault();
+          createDog(this.state.newDogCharacteristics)
+            .then(() => setIsLoading(true))
+            .then(() =>
+              getAllDogs()
+                .then(setAllDogs)
+                .then(() => setIsLoading(false))
+            )
+            .then(() => this.setNewDogName(""))
+            .then(() => this.setNewDogDescription(""))
+            .then(() => this.setNewDogImage(defaultSelectedImage))
+            .then(() => setDogsAreDisplayed(true));
         }}
       >
         <h4>Create a New Dog</h4>
         <label htmlFor="name">Dog Name</label>
-        <input type="text" onChange={() => {}} disabled={false} />
+        <input
+          value={this.state.newDogCharacteristics.newDogName}
+          type="text"
+          onChange={(e) => this.setNewDogName(e.target.value)}
+          disabled={isLoading}
+        />
         <label htmlFor="description">Dog Description</label>
         <textarea
           name=""
           id=""
           cols={80}
           rows={10}
-          onChange={(e) => {}}
-          disabled={false}
+          onChange={(e) => this.setNewDogDescription(e.target.value)}
+          disabled={isLoading}
         />
         <label htmlFor="picture">Select an Image</label>
-        <select onChange={(e) => {}} disabled={false}>
+        <select
+          onChange={(e) => this.setNewDogImage(e.target.value)}
+          disabled={isLoading}
+        >
           {Object.entries(dogPictures).map(([label, pictureValue]) => {
             return (
               <option value={pictureValue} key={pictureValue}>
@@ -33,7 +110,7 @@ export class ClassCreateDogForm extends Component {
             );
           })}
         </select>
-        <input type="submit" value="submit" disabled={false} />
+        <input type="submit" value="submit" disabled={isLoading} />
       </form>
     );
   }
