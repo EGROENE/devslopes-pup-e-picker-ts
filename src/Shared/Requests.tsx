@@ -1,4 +1,4 @@
-import { Dog } from "../types";
+import { Dog, newDogCharacteristics } from "../types";
 
 // Method to fetch all dogs from dogs array in db.json:
 export const getAllDogs = (): Promise<any> => {
@@ -50,14 +50,16 @@ export const removeFromFavorites = (id: number): Promise<Response> => {
 
 // Maybe take in object that contains the characteristics. This will correlate with the state object in
 // FunctionalCreateDogForm that will be passed to it.
-export const createDog = (newDogCharacteristics: Dog): Promise<Response> => {
+export const createDog = (
+  newDogCharacteristics: newDogCharacteristics
+): Promise<Response> => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
-    "name": newDogCharacteristics.name,
-    "image": newDogCharacteristics.image,
-    "description": newDogCharacteristics.description,
+    "name": newDogCharacteristics.newDogName,
+    "image": newDogCharacteristics.newDogImage,
+    "description": newDogCharacteristics.newDogDescription,
     "id": 0,
   });
 
