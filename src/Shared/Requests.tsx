@@ -1,4 +1,4 @@
-import { Dog, newDogCharacteristics } from "../types";
+import { newDogCharacteristics } from "../types";
 
 // Method to fetch all dogs from dogs array in db.json:
 export const getAllDogs = (): Promise<any> => {
