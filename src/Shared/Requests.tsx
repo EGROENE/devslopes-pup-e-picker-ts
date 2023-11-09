@@ -1,6 +1,5 @@
 import { newDogCharacteristics } from "../types";
 
-// Method to fetch all dogs from dogs array in db.json:
 export const getAllDogs = (): Promise<any> => {
   return fetch("http://localhost:3000/dogs").then((response) => response.json());
 };
@@ -48,8 +47,6 @@ export const removeFromFavorites = (id: number): Promise<Response> => {
   });
 };
 
-// Maybe take in object that contains the characteristics. This will correlate with the state object in
-// FunctionalCreateDogForm that will be passed to it.
 export const createDog = (
   newDogCharacteristics: newDogCharacteristics
 ): Promise<Response> => {

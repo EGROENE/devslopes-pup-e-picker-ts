@@ -10,8 +10,6 @@ export function FunctionalApp() {
     getAllDogs().then(setAllDogs);
   }, []);
 
-  // State to determine if (favs/unfavs) or 'create dog' displays:
-  // Pass setter to FunctionalSection. There, call on click of 'favs', 'unfavs', & 'create dog' btns
   const [dogsAreDisplayed, setDogsAreDisplayed] = useState<boolean>(true);
 
   const [favsAreDisplayed, setFavsAreDisplayed] = useState<boolean | null>(null);

@@ -49,7 +49,6 @@ export const FunctionalDogs = ({
             name: dog.name,
           }}
           key={dog.id}
-          // onClick of trash, dog is deleted from 'dogs' array in db.json
           onTrashIconClick={() => {
             deleteDog(String(dog.id))
               .then(() => setIsLoading(true))
@@ -60,7 +59,6 @@ export const FunctionalDogs = ({
                   .then(() => toast.error("Dog removed"))
               );
           }}
-          // onClick of heart, add to favorited (PATCH request made to update isFavorite to true)
           onHeartClick={() => {
             removeFromFavorites(dog.id)
               .then(() => setIsLoading(true))
@@ -71,7 +69,6 @@ export const FunctionalDogs = ({
                   .then(() => toast.error("Dog removed from favorites"))
               );
           }}
-          // onClick of heart, add to unfavorited (PATCH request made to update isFavorite to false)
           onEmptyHeartClick={() => {
             addToFavorites(dog.id)
               .then(() => setIsLoading(true))
