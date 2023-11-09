@@ -3,6 +3,7 @@ import { dogPictures } from "../dog-pictures";
 import { createDog } from "../Shared/Requests";
 import { Dog, newDogCharacteristics } from "../types";
 import { getAllDogs } from "../Shared/Requests";
+import toast from "react-hot-toast";
 
 // use this as your default selected image
 const defaultSelectedImage = dogPictures.BlueHeeler;
@@ -48,7 +49,8 @@ export const FunctionalCreateDogForm = ({
           .then(() => setNewDogName(""))
           .then(() => setNewDogDescription(""))
           .then(() => setNewDogImage(defaultSelectedImage))
-          .then(() => setDogsAreDisplayed(true));
+          .then(() => setDogsAreDisplayed(true))
+          .then(() => toast.success("Dog created!"));
       }}
     >
       <h4>Create a New Dog</h4>

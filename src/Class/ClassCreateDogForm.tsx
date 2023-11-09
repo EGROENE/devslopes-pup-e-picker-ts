@@ -3,6 +3,7 @@ import { dogPictures } from "../dog-pictures";
 import { Dog, newDogCharacteristics } from "../types";
 import { createDog } from "../Shared/Requests";
 import { getAllDogs } from "../Shared/Requests";
+import toast from "react-hot-toast";
 
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
@@ -77,7 +78,8 @@ export class ClassCreateDogForm extends Component<
             .then(() => this.setNewDogName(""))
             .then(() => this.setNewDogDescription(""))
             .then(() => this.setNewDogImage(defaultSelectedImage))
-            .then(() => setDogsAreDisplayed(true));
+            .then(() => setDogsAreDisplayed(true))
+            .then(() => toast.success("Dog added!"));
         }}
       >
         <h4>Create a New Dog</h4>
