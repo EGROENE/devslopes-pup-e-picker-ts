@@ -1,7 +1,7 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { dogPictures } from "../dog-pictures";
 import { createDog } from "../Shared/Requests";
-import { Dog } from "../types";
+import { Dog, newDogCharacteristics } from "../types";
 import { getAllDogs } from "../Shared/Requests";
 
 // use this as your default selected image
@@ -24,10 +24,10 @@ export const FunctionalCreateDogForm = ({
   const [newDogImage, setNewDogImage] = useState<string>(defaultSelectedImage);
   const [newDogDescription, setNewDogDescription] = useState<string>("");
 
-  const newDogCharacteristics: Dog = {
-    name: newDogName,
-    image: newDogImage,
-    description: newDogDescription,
+  const newDogCharacteristics: newDogCharacteristics = {
+    newDogName: newDogName,
+    newDogImage: newDogImage,
+    newDogDescription: newDogDescription,
     isFavorite: false,
     id: 0,
   };
