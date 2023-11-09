@@ -35,7 +35,7 @@ export class ClassSection extends Component<ClassSectionProps> {
     const dataHasBeenFetched: boolean = allDogs.length > 0;
 
     return (
-      <section id="main-section">
+      <>
         <div className="container-header">
           <div className="container-label">Dogs: </div>
 
@@ -117,7 +117,7 @@ export class ClassSection extends Component<ClassSectionProps> {
             />
           )}
         </div>
-      </section>
+      </>
     );
   }
 }
