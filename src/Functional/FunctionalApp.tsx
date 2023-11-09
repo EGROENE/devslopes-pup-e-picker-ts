@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
-import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalSection } from "./FunctionalSection";
 import { Dog } from "../types";
 import { getAllDogs } from "../Shared/Requests";
@@ -28,31 +26,14 @@ export function FunctionalApp() {
       <section id="main-section">
         <FunctionalSection
           allDogs={allDogs}
+          setAllDogs={setAllDogs}
           dogsAreDisplayed={dogsAreDisplayed}
           setDogsAreDisplayed={setDogsAreDisplayed}
           favsAreDisplayed={favsAreDisplayed}
           setFavsAreDisplayed={setFavsAreDisplayed}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
-        <div className="content-container">
-          {dogsAreDisplayed ? (
-            <FunctionalDogs
-              allDogs={allDogs}
-              setAllDogs={setAllDogs}
-              dogsAreDisplayed={dogsAreDisplayed}
-              favsAreDisplayed={favsAreDisplayed}
-              setFavsAreDisplayed={setFavsAreDisplayed}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
-          ) : (
-            <FunctionalCreateDogForm
-              setAllDogs={setAllDogs}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-              setDogsAreDisplayed={setDogsAreDisplayed}
-            />
-          )}
-        </div>
       </section>
     </div>
   );
