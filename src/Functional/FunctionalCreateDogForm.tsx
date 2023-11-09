@@ -82,7 +82,7 @@ export const FunctionalCreateDogForm = ({
           );
         })}
       </select>
-      <input type="submit" />
+      <input disabled={isLoading} type="submit" />
     </form>
   );
 };
