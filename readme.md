@@ -2,10 +2,11 @@
 
 ## This project is a part of the curriculum of the coaching program I am working through at the moment. I completed it using React.js & TypeScript. <br />
 
-### TLDR: <br />
+### TLDR: Practice making HTTP CRUD requests in a React.js / TypeScript application <br />
 For every dog in a database (json-server in this case), a card containing its name, image, description, a 'delete' button, and 'favorite/unfavorite' button displays. Users can click the 'delete' button to remove the dog from the database (a function containing a DELETE request is called) & they can click the 'favorite/unfavorite/ button to add the dog to either of those categories (PATCH request is made to the database to change the 'isFavorite' boolean property). By default, all dogs in the database are displayed on page load, whether favorited or not. Users can use options on a navbar to see favorited/unfavorited dogs, as well as all dogs if no navbar option is selected. They can also click on a navbar item that displays a form, where they can provide info for a dog they would like to add (on submission of this form, a POST request containing the new dog's info is made to the database). The various parts of the app are rendered conditionally. <br />
 
 Please read the instructions I was given below for further details. <br />
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 In this assignment we will be building a dog-favoriting app called Pup- E-Picker. This app will allow users to... <br />
 
