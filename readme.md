@@ -1,6 +1,6 @@
-## Pup-E-Picker
+# Pup-E-Picker
 
-# This project is a part of the curriculum of the coaching program I am working through at the moment. Please read the instructions I was given below.<br />
+## This project is a part of the curriculum of the coaching program I am working through at the moment. Please read the instructions I was given below.<br />
 
 In this assignment we will be building a dog-favoriting app called Pup- E-Picker. This app will allow users to... <br />
 
