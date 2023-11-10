@@ -80,28 +80,28 @@ Note: It's not a perfect mapping to what you're going to build, below highlights
 
 ## Showing the Correct Component <br />
 
-- place `FunctionalDogs` inside of the `.content-container` div of the `FunctionalSection` component **using React Children** <br /<br />>
-- place `FunctionalCreateDogForm` inside of the `.content-container` div of the `FunctionalSection` component **using React Children** <br /<br />>
-- place `ClassDogs` inside of the `.content-container` div of the `ClassSection` component **using React Children** <br /<br />>
-- place `ClassCreateDogForm` inside of the `.content-container` div of the `ClassSection` component **using React Children** <br /<br />>
+- place `FunctionalDogs` inside of the `.content-container` div of the `FunctionalSection` component **using React Children** <br />
+- place `FunctionalCreateDogForm` inside of the `.content-container` div of the `FunctionalSection` component **using React Children** <br />
+- place `ClassDogs` inside of the `.content-container` div of the `ClassSection` component **using React Children** <br />
+- place `ClassCreateDogForm` inside of the `.content-container` div of the `ClassSection` component **using React Children** <br />
 
-## Navigation <br /<br />>
+## Navigation <br />
 
-You should use conditional rendering to show different components inside of the `(Class | Functional)Section` components using react children. The specifications are as follows... <br /<br />>
+You should use conditional rendering to show different components inside of the `(Class | Functional)Section` components using react children. The specifications are as follows... <br />
 
-### when no tab is active <br /<br />>
+### when no tab is active <br />
 
-- show the `(Functional | Class)Dogs` component <br /<br />>
-- the dogs we can see should be ALL OF THE DOGS FETCHED <br /<br />>
+- show the `(Functional | Class)Dogs` component <br />
+- the dogs we can see should be ALL OF THE DOGS FETCHED <br />
 
-### when the `favorited` tab is active <br /<br />>
+### when the `favorited` tab is active <br />
 
-- shows the `(Functional | Class)Dogs` component <br /<br />>
+- shows the `(Functional | Class)Dogs` component <br />
 - the dogs we can see should be ONLY THE DOGS WHERE `isFavorite` IS TRUE <br /<br />>
 
-### when the `unfavorited` tab is active <br /<br />>
+### when the `unfavorited` tab is active <br />
 
-- should show the `Dogs` component <br /<br />>
+- should show the `Dogs` component <br />
 - the selected dogs should be ONLY THE DOGS WHERE `isFavorite` IS FALSE <br /<br />>
 
 ### when the create dog tab is active <br /<br />>
@@ -109,7 +109,7 @@ You should use conditional rendering to show different components inside of the 
 - should show the `(Functional | Class)CreateDogForm` component <br /<br />>
 - should not show the `Dogs` component <br /<br />>
 
-### Tabs <br /<br />>
+### Tabs <br />
 
 - Should be black when active (You can add the `active` class to it to style an active tab correctly) <br />
 - Should be white when inactive <br />
