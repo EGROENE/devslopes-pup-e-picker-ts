@@ -107,7 +107,6 @@ export const FunctionalSection = ({
             setAllDogs={setAllDogs}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-            setDogsAreDisplayed={setDogsAreDisplayed}
           />
         )}
       </div>

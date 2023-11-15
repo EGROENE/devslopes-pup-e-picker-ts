@@ -113,7 +113,6 @@ export class ClassSection extends Component<ClassSectionProps> {
               setAllDogs={setAllDogs}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
-              setDogsAreDisplayed={setDogsAreDisplayed}
             />
           )}
         </div>

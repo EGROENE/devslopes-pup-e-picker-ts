@@ -12,14 +12,12 @@ interface FunctionalCreateDogFormProps {
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
-  setDogsAreDisplayed: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const FunctionalCreateDogForm = ({
   setAllDogs: setAllDogs,
   isLoading: isLoading,
   setIsLoading: setIsLoading,
-  setDogsAreDisplayed: setDogsAreDisplayed,
 }: FunctionalCreateDogFormProps) => {
   const [newDogName, setNewDogName] = useState<string>("");
   const [newDogImage, setNewDogImage] = useState<string>(defaultSelectedImage);
@@ -37,7 +35,6 @@ export const FunctionalCreateDogForm = ({
     setNewDogName("");
     setNewDogDescription("");
     setNewDogImage(defaultSelectedImage);
-    setDogsAreDisplayed(true);
   };
 
   return (
@@ -53,8 +50,8 @@ export const FunctionalCreateDogForm = ({
               .then(setAllDogs)
               .then(() => setIsLoading(false))
           )
-          .then(() => resetForm())
-          .then(() => toast.success("Dog created!"));
+          .then(() => toast.success(`${newDogName} created!`))
+          .then(() => resetForm());
       }}
     >
       <h4>Create a New Dog</h4>

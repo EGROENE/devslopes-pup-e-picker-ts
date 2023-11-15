@@ -15,7 +15,6 @@ interface ClassCreateDogFormProps {
   setAllDogs: (newValue: Dog[]) => void;
   isLoading: boolean;
   setIsLoading: (newValue: boolean) => void;
-  setDogsAreDisplayed: (newValue: boolean) => void;
 }
 
 export class ClassCreateDogForm extends Component<
@@ -60,13 +59,12 @@ export class ClassCreateDogForm extends Component<
   };
 
   render() {
-    const { setAllDogs, isLoading, setIsLoading, setDogsAreDisplayed } = this.props;
+    const { setAllDogs, isLoading, setIsLoading } = this.props;
 
     const resetForm = (): void => {
       this.setNewDogName("");
       this.setNewDogDescription("");
       this.setNewDogImage(defaultSelectedImage);
-      setDogsAreDisplayed(true);
     };
 
     return (
@@ -82,8 +80,10 @@ export class ClassCreateDogForm extends Component<
                 .then(setAllDogs)
                 .then(() => setIsLoading(false))
             )
-            .then(() => resetForm())
-            .then(() => toast.success("Dog added!"));
+            .then(() =>
+              toast.success(`${this.state.newDogCharacteristics.newDogName} created!`)
+            )
+            .then(() => resetForm());
         }}
       >
         <h4>Create a New Dog</h4>
