@@ -5,3 +5,5 @@ export interface Dog {
   isFavorite?: boolean;
   id: number;
 }
+
+export type Tab = "all-dogs" | "fav-dogs" | "unfav-dogs" | "create-dog";
