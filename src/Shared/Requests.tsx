@@ -1,4 +1,4 @@
-import { newDogCharacteristics } from "../types";
+import { Dog } from "../types";
 
 export const getAllDogs = (): Promise<any> => {
   return fetch("http://localhost:3000/dogs").then((response) => response.json());
@@ -47,16 +47,14 @@ export const removeFromFavorites = (id: number): Promise<Response> => {
   });
 };
 
-export const createDog = (
-  newDogCharacteristics: newDogCharacteristics
-): Promise<Response> => {
+export const createDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<Response> => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
-    "name": newDogCharacteristics.newDogName,
-    "image": newDogCharacteristics.newDogImage,
-    "description": newDogCharacteristics.newDogDescription,
+    "name": newDogCharacteristics.name,
+    "image": newDogCharacteristics.image,
+    "description": newDogCharacteristics.description,
     "id": 0,
   });
 
@@ -65,5 +63,11 @@ export const createDog = (
     headers: myHeaders,
     body: raw,
     redirect: "follow",
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not fetch dogs.");
+    } else {
+      return response.json();
+    }
   });
 };
