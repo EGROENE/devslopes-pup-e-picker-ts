@@ -56,7 +56,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
                   getAllDogs()
                     .then(setAllDogs)
                     .then(() => setIsLoading(false))
-                    .then(() => toast.error("Dog removed"))
+                    .then(() => toast.error(`${dog.name} removed`))
                 );
             }}
             onHeartClick={() => {
@@ -66,7 +66,6 @@ export class ClassDogs extends Component<ClassDogsProps> {
                   getAllDogs()
                     .then(setAllDogs)
                     .then(() => setIsLoading(false))
-                    .then(() => toast.error("Dog removed from favorites"))
                 );
             }}
             onEmptyHeartClick={() => {
@@ -76,7 +75,6 @@ export class ClassDogs extends Component<ClassDogsProps> {
                   getAllDogs()
                     .then(setAllDogs)
                     .then(() => setIsLoading(false))
-                    .then(() => toast.success("Dog added to favorites"))
                 );
             }}
             isLoading={isLoading}
