@@ -1,20 +1,18 @@
 import { Component } from "react";
 import { dogPictures } from "../dog-pictures";
-import { Dog, newDogCharacteristics } from "../types";
-import { createDog } from "../Shared/Requests";
-import { getAllDogs } from "../Shared/Requests";
-import toast from "react-hot-toast";
+import { Dog } from "../types";
 
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 interface ClassCreateDogFormState {
-  newDogCharacteristics: newDogCharacteristics;
+  newDogName: string;
+  newDogImage: string;
+  newDogDescription: string;
 }
 
 interface ClassCreateDogFormProps {
-  setAllDogs: (newValue: Dog[]) => void;
+  createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   isLoading: boolean;
-  setIsLoading: (newValue: boolean) => void;
 }
 
 export class ClassCreateDogForm extends Component<
@@ -22,44 +20,34 @@ export class ClassCreateDogForm extends Component<
   ClassCreateDogFormState
 > {
   state = {
-    newDogCharacteristics: {
-      newDogName: "",
-      newDogImage: defaultSelectedImage,
-      newDogDescription: "",
-      isFavorite: false,
-      id: 0,
-    },
+    newDogName: "",
+    newDogImage: defaultSelectedImage,
+    newDogDescription: "",
   };
 
   setNewDogName = (newValue: string) => {
     this.setState((prevState) => ({
-      newDogCharacteristics: {
-        ...prevState.newDogCharacteristics,
-        newDogName: newValue,
-      },
+      ...prevState,
+      newDogName: newValue,
     }));
   };
 
   setNewDogImage = (newValue: string) => {
     this.setState((prevState) => ({
-      newDogCharacteristics: {
-        ...prevState.newDogCharacteristics,
-        newDogImage: newValue,
-      },
+      ...prevState,
+      newDogImage: newValue,
     }));
   };
 
   setNewDogDescription = (newValue: string) => {
     this.setState((prevState) => ({
-      newDogCharacteristics: {
-        ...prevState.newDogCharacteristics,
-        newDogDescription: newValue,
-      },
+      ...prevState,
+      newDogDescription: newValue,
     }));
   };
 
   render() {
-    const { setAllDogs, isLoading, setIsLoading } = this.props;
+    const { isLoading, createNewDog } = this.props;
 
     const resetForm = (): void => {
       this.setNewDogName("");
@@ -73,24 +61,21 @@ export class ClassCreateDogForm extends Component<
         id="create-dog-form"
         onSubmit={(e) => {
           e.preventDefault();
-          createDog(this.state.newDogCharacteristics)
-            .then(() => setIsLoading(true))
-            .then(() =>
-              getAllDogs()
-                .then(setAllDogs)
-                .then(() => setIsLoading(false))
-            )
-            .then(() =>
-              toast.success(`${this.state.newDogCharacteristics.newDogName} created!`)
-            )
-            .then(() => resetForm());
+          createNewDog(
+            {
+              description: this.state.newDogDescription,
+              image: this.state.newDogImage,
+              name: this.state.newDogName,
+            },
+            resetForm
+          );
         }}
       >
         <h4>Create a New Dog</h4>
         <label htmlFor="name">Dog Name</label>
         <input
           required
-          value={this.state.newDogCharacteristics.newDogName}
+          value={this.state.newDogName}
           type="text"
           onChange={(e) => this.setNewDogName(e.target.value)}
           disabled={isLoading}

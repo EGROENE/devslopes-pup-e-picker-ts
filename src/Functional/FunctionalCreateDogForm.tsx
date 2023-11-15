@@ -1,37 +1,25 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import { dogPictures } from "../dog-pictures";
-import { createDog } from "../Shared/Requests";
-import { Dog, newDogCharacteristics } from "../types";
-import { getAllDogs } from "../Shared/Requests";
-import toast from "react-hot-toast";
+import { Dog } from "../types";
 
 // use this as your default selected image
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 interface FunctionalCreateDogFormProps {
-  setAllDogs: Dispatch<SetStateAction<Dog[]>>;
+  createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export const FunctionalCreateDogForm = ({
-  setAllDogs: setAllDogs,
+  createNewDog: createNewDog,
   isLoading: isLoading,
-  setIsLoading: setIsLoading,
 }: FunctionalCreateDogFormProps) => {
   const [newDogName, setNewDogName] = useState<string>("");
   const [newDogImage, setNewDogImage] = useState<string>(defaultSelectedImage);
   const [newDogDescription, setNewDogDescription] = useState<string>("");
 
-  const newDogCharacteristics: newDogCharacteristics = {
-    newDogName: newDogName,
-    newDogImage: newDogImage,
-    newDogDescription: newDogDescription,
-    isFavorite: false,
-    id: 0,
-  };
-
-  const resetForm = (): void => {
+  /* Defined here b/c it relies on state setters of this component. Things would be cluttered if these states were to be defined in FunctionalApp.jsx */
+  const resetForm = () => {
     setNewDogName("");
     setNewDogDescription("");
     setNewDogImage(defaultSelectedImage);
@@ -43,15 +31,15 @@ export const FunctionalCreateDogForm = ({
       id="create-dog-form"
       onSubmit={(e) => {
         e.preventDefault();
-        createDog(newDogCharacteristics)
-          .then(() => setIsLoading(true))
-          .then(() =>
-            getAllDogs()
-              .then(setAllDogs)
-              .then(() => setIsLoading(false))
-          )
-          .then(() => toast.success(`${newDogName} created!`))
-          .then(() => resetForm());
+        createNewDog(
+          {
+            description: newDogDescription,
+            image: newDogImage,
+            name: newDogName,
+          },
+          // Form values reset only if dog is successfully created. See definition of createNewDog() in FunctionalApp.jsx
+          resetForm
+        );
       }}
     >
       <h4>Create a New Dog</h4>

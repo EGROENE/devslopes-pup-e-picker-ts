@@ -1,7 +1,8 @@
 import { Component } from "react";
 import { ClassSection } from "./ClassSection";
 import { Dog } from "../types";
-import { getAllDogs } from "../Shared/Requests";
+import { getAllDogs, createDog } from "../Shared/Requests";
+import toast from "react-hot-toast";
 
 interface ClassAppState {
   allDogs: Dog[];
@@ -52,6 +53,19 @@ export class ClassApp extends Component {
     });
   }
 
+  createNewDog = (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => {
+    createDog(newDogCharacteristics)
+      .then(() => {
+        this.setIsLoading(true);
+        getAllDogs()
+          .then(this.setAllDogs)
+          .then(() => this.setIsLoading(false));
+        toast.success(`${newDogCharacteristics.name} created!`);
+        resetForm();
+      })
+      .catch(() => toast.error("Something went wrong. Please try again."));
+  };
+
   render() {
     return (
       <div className="App" style={{ backgroundColor: "goldenrod" }}>
@@ -60,6 +74,7 @@ export class ClassApp extends Component {
         </header>
         <section id="main-section">
           <ClassSection
+            createNewDog={this.createNewDog}
             allDogs={this.state.allDogs}
             setAllDogs={this.setAllDogs}
             dogsAreDisplayed={this.state.dogsAreDisplayed}

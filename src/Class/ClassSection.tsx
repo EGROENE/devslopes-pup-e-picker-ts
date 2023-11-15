@@ -6,6 +6,7 @@ import { ClassCreateDogForm } from "./ClassCreateDogForm";
 import { Dog } from "../types";
 
 interface ClassSectionProps {
+  createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   allDogs: Dog[];
   setAllDogs: (newValue: Dog[]) => void;
   dogsAreDisplayed: boolean;
@@ -19,6 +20,7 @@ interface ClassSectionProps {
 export class ClassSection extends Component<ClassSectionProps> {
   render() {
     const {
+      createNewDog: createNewDog,
       allDogs,
       setAllDogs,
       dogsAreDisplayed,
@@ -109,11 +111,7 @@ export class ClassSection extends Component<ClassSectionProps> {
               setIsLoading={setIsLoading}
             />
           ) : (
-            <ClassCreateDogForm
-              setAllDogs={setAllDogs}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
+            <ClassCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />
           )}
         </div>
       </>

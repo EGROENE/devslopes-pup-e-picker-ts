@@ -6,6 +6,7 @@ import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 
 interface FunctionalSectionProps {
+  createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   allDogs: Dog[];
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
   dogsAreDisplayed: boolean;
@@ -17,6 +18,7 @@ interface FunctionalSectionProps {
 }
 
 export const FunctionalSection = ({
+  createNewDog: createNewDog,
   allDogs: allDogs,
   setAllDogs: setAllDogs,
   dogsAreDisplayed: dogsAreDisplayed,
@@ -103,11 +105,7 @@ export const FunctionalSection = ({
             setIsLoading={setIsLoading}
           />
         ) : (
-          <FunctionalCreateDogForm
-            setAllDogs={setAllDogs}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-          />
+          <FunctionalCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />
         )}
       </div>
     </>
