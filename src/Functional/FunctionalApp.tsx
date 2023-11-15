@@ -11,10 +11,6 @@ export function FunctionalApp() {
     getAllDogs().then(setAllDogs);
   }, []);
 
-  const [dogsAreDisplayed, setDogsAreDisplayed] = useState<boolean>(true);
-
-  const [favsAreDisplayed, setFavsAreDisplayed] = useState<boolean | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
@@ -45,10 +41,6 @@ export function FunctionalApp() {
           createNewDog={createNewDog}
           allDogs={allDogs}
           setAllDogs={setAllDogs}
-          dogsAreDisplayed={dogsAreDisplayed}
-          setDogsAreDisplayed={setDogsAreDisplayed}
-          favsAreDisplayed={favsAreDisplayed}
-          setFavsAreDisplayed={setFavsAreDisplayed}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />

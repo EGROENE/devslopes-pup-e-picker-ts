@@ -3,30 +3,37 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { ClassDogs } from "./ClassDogs";
 import { ClassCreateDogForm } from "./ClassCreateDogForm";
-import { Dog } from "../types";
+import { Dog, Tab } from "../types";
+
+interface ClassSectionState {
+  activeTab: Tab;
+}
 
 interface ClassSectionProps {
   createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   allDogs: Dog[];
   setAllDogs: (newValue: Dog[]) => void;
-  dogsAreDisplayed: boolean;
-  setDogsAreDisplayed: (newValue: boolean) => void;
-  favsAreDisplayed: boolean | null;
-  setFavsAreDisplayed: (newValue: boolean | null) => void;
   isLoading: boolean;
   setIsLoading: (newValue: boolean) => void;
 }
 
-export class ClassSection extends Component<ClassSectionProps> {
+export class ClassSection extends Component<ClassSectionProps, ClassSectionState> {
+  state = {
+    activeTab: "all-dogs" as Tab,
+  };
+
+  setActiveTab = (newValue: Tab) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      activeTab: newValue,
+    }));
+  };
+
   render() {
     const {
       createNewDog: createNewDog,
       allDogs,
       setAllDogs,
-      dogsAreDisplayed,
-      setDogsAreDisplayed,
-      favsAreDisplayed,
-      setFavsAreDisplayed,
       isLoading,
       setIsLoading,
     } = this.props;
@@ -49,18 +56,14 @@ export class ClassSection extends Component<ClassSectionProps> {
             <button
               disabled={!dataHasBeenFetched}
               className={
-                favsAreDisplayed && dogsAreDisplayed ? "selector active" : "selector"
+                this.state.activeTab === "fav-dogs" ? "selector active" : "selector"
               }
               onClick={() => {
-                if (!dogsAreDisplayed || !favsAreDisplayed) {
-                  setDogsAreDisplayed(true);
+                if (this.state.activeTab !== "fav-dogs") {
+                  this.setActiveTab("fav-dogs");
                 }
-                if (favsAreDisplayed && dogsAreDisplayed) {
-                  setFavsAreDisplayed(null);
-                }
-                // if favsAreDisplayed is false or null...
-                if (!favsAreDisplayed) {
-                  setFavsAreDisplayed(true);
+                if (this.state.activeTab === "fav-dogs") {
+                  this.setActiveTab("all-dogs");
                 }
               }}
             >
@@ -70,19 +73,14 @@ export class ClassSection extends Component<ClassSectionProps> {
             <button
               disabled={!dataHasBeenFetched}
               className={
-                favsAreDisplayed === false && dogsAreDisplayed
-                  ? "selector active"
-                  : "selector"
+                this.state.activeTab === "unfav-dogs" ? "selector active" : "selector"
               }
               onClick={() => {
-                if (!dogsAreDisplayed) {
-                  setDogsAreDisplayed(true);
+                if (this.state.activeTab !== "unfav-dogs") {
+                  this.setActiveTab("unfav-dogs");
                 }
-                if (!favsAreDisplayed && dogsAreDisplayed) {
-                  setFavsAreDisplayed(null);
-                }
-                if (favsAreDisplayed || favsAreDisplayed === null) {
-                  setFavsAreDisplayed(false);
+                if (this.state.activeTab === "unfav-dogs") {
+                  this.setActiveTab("all-dogs");
                 }
               }}
             >
@@ -90,9 +88,13 @@ export class ClassSection extends Component<ClassSectionProps> {
             </button>
             <button
               disabled={!dataHasBeenFetched}
-              className={!dogsAreDisplayed ? "selector active" : "selector"}
+              className={
+                this.state.activeTab === "create-dog" ? "selector active" : "selector"
+              }
               onClick={() => {
-                dogsAreDisplayed ? setDogsAreDisplayed(false) : setDogsAreDisplayed(true);
+                this.state.activeTab !== "create-dog"
+                  ? this.setActiveTab("create-dog")
+                  : this.setActiveTab("all-dogs");
               }}
             >
               create dog
@@ -100,13 +102,11 @@ export class ClassSection extends Component<ClassSectionProps> {
           </div>
         </div>
         <div className="content-container">
-          {dogsAreDisplayed ? (
+          {this.state.activeTab !== "create-dog" ? (
             <ClassDogs
               allDogs={allDogs}
               setAllDogs={setAllDogs}
-              dogsAreDisplayed={dogsAreDisplayed}
-              favsAreDisplayed={favsAreDisplayed}
-              setFavsAreDisplayed={setFavsAreDisplayed}
+              activeTab={this.state.activeTab}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
             />

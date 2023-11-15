@@ -1,6 +1,6 @@
 import { DogCard } from "../Shared/DogCard";
 import { Component } from "react";
-import { Dog } from "../types";
+import { Dog, Tab } from "../types";
 import {
   getAllDogs,
   deleteDog,
@@ -12,28 +12,20 @@ import toast from "react-hot-toast";
 interface ClassDogsProps {
   allDogs: Dog[];
   setAllDogs: (newValue: Dog[]) => void;
-  dogsAreDisplayed: boolean;
-  favsAreDisplayed: boolean | null;
-  setFavsAreDisplayed: (newValue: boolean | null) => void;
+  activeTab: Tab;
   isLoading: boolean;
   setIsLoading: (newValue: boolean) => void;
 }
 
 export class ClassDogs extends Component<ClassDogsProps> {
   render() {
-    const {
-      allDogs,
-      setAllDogs,
-      dogsAreDisplayed,
-      favsAreDisplayed,
-      isLoading,
-      setIsLoading,
-    } = this.props;
+    const { allDogs, setAllDogs, activeTab, isLoading, setIsLoading } = this.props;
 
-    let displayedDogs = allDogs;
-    if (dogsAreDisplayed && favsAreDisplayed) {
+    let displayedDogs: Dog[] = allDogs;
+    if (activeTab === "fav-dogs") {
       displayedDogs = allDogs.filter((dog) => dog.isFavorite);
-    } else if (dogsAreDisplayed && favsAreDisplayed === false) {
+    }
+    if (activeTab === "unfav-dogs") {
       displayedDogs = displayedDogs = allDogs.filter((dog) => !dog.isFavorite);
     }
 

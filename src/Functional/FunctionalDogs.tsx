@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { DogCard } from "../Shared/DogCard";
-import { Dog } from "../types";
+import { Dog, Tab } from "../types";
 import {
   deleteDog,
   getAllDogs,
@@ -12,9 +12,7 @@ import toast from "react-hot-toast";
 interface FunctionalDogsProps {
   allDogs: Dog[];
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
-  dogsAreDisplayed: boolean;
-  favsAreDisplayed: boolean | null;
-  setFavsAreDisplayed: Dispatch<SetStateAction<boolean | null>>;
+  activeTab: Tab;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
@@ -22,19 +20,17 @@ interface FunctionalDogsProps {
 export const FunctionalDogs = ({
   allDogs: allDogs,
   setAllDogs: setAllDogs,
-  dogsAreDisplayed: dogsAreDisplayed,
-  favsAreDisplayed: favsAreDisplayed,
+  activeTab: activeTab,
   isLoading: isLoading,
   setIsLoading: setIsLoading,
 }: FunctionalDogsProps) => {
   // Set value of displayedDogs (used to populate page w/ dog cards):
-  let displayedDogs: Dog[];
-  if (dogsAreDisplayed && favsAreDisplayed) {
+  let displayedDogs: Dog[] = allDogs;
+  if (activeTab === "fav-dogs") {
     displayedDogs = allDogs.filter((dog) => dog.isFavorite);
-  } else if (dogsAreDisplayed && favsAreDisplayed === false) {
+  }
+  if (activeTab === "unfav-dogs") {
     displayedDogs = displayedDogs = allDogs.filter((dog) => !dog.isFavorite);
-  } else {
-    displayedDogs = allDogs;
   }
 
   return (

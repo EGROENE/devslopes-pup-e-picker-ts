@@ -1,7 +1,7 @@
 // you can use this type for react children if you so choose
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
-import { Dog } from "../types";
+import { Dog, Tab } from "../types";
 import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 
@@ -9,10 +9,6 @@ interface FunctionalSectionProps {
   createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   allDogs: Dog[];
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
-  dogsAreDisplayed: boolean;
-  setDogsAreDisplayed: Dispatch<SetStateAction<boolean>>;
-  favsAreDisplayed: boolean | null;
-  setFavsAreDisplayed: Dispatch<SetStateAction<boolean | null>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
@@ -21,10 +17,6 @@ export const FunctionalSection = ({
   createNewDog: createNewDog,
   allDogs: allDogs,
   setAllDogs: setAllDogs,
-  dogsAreDisplayed: dogsAreDisplayed,
-  setDogsAreDisplayed: setDogsAreDisplayed,
-  favsAreDisplayed: favsAreDisplayed,
-  setFavsAreDisplayed: setFavsAreDisplayed,
   isLoading: isLoading,
   setIsLoading: setIsLoading,
 }: FunctionalSectionProps) => {
@@ -32,6 +24,8 @@ export const FunctionalSection = ({
   const unfavsTotal = allDogs.filter((dog) => !dog.isFavorite).length;
 
   const dataHasBeenFetched: boolean = allDogs.length > 0;
+
+  const [activeTab, setActiveTab] = useState<Tab>("all-dogs");
 
   return (
     <>
@@ -43,19 +37,13 @@ export const FunctionalSection = ({
         <div className="selectors">
           <button
             disabled={!dataHasBeenFetched}
-            className={
-              favsAreDisplayed && dogsAreDisplayed ? "selector active" : "selector"
-            }
+            className={activeTab === "fav-dogs" ? "selector active" : "selector"}
             onClick={() => {
-              if (!dogsAreDisplayed || !favsAreDisplayed) {
-                setDogsAreDisplayed(true);
+              if (activeTab !== "fav-dogs") {
+                setActiveTab("fav-dogs");
               }
-              if (favsAreDisplayed && dogsAreDisplayed) {
-                setFavsAreDisplayed(null);
-              }
-              // if favsAreDisplayed is false or null...
-              if (!favsAreDisplayed) {
-                setFavsAreDisplayed(true);
+              if (activeTab === "fav-dogs") {
+                setActiveTab("all-dogs");
               }
             }}
           >
@@ -63,20 +51,13 @@ export const FunctionalSection = ({
           </button>
           <button
             disabled={!dataHasBeenFetched}
-            className={
-              favsAreDisplayed === false && dogsAreDisplayed
-                ? "selector active"
-                : "selector"
-            }
+            className={activeTab === "unfav-dogs" ? "selector active" : "selector"}
             onClick={() => {
-              if (!dogsAreDisplayed) {
-                setDogsAreDisplayed(true);
+              if (activeTab !== "unfav-dogs") {
+                setActiveTab("unfav-dogs");
               }
-              if (!favsAreDisplayed && dogsAreDisplayed) {
-                setFavsAreDisplayed(null);
-              }
-              if (favsAreDisplayed || favsAreDisplayed === null) {
-                setFavsAreDisplayed(false);
+              if (activeTab === "unfav-dogs") {
+                setActiveTab("all-dogs");
               }
             }}
           >
@@ -84,9 +65,11 @@ export const FunctionalSection = ({
           </button>
           <button
             disabled={!dataHasBeenFetched}
-            className={!dogsAreDisplayed ? "selector active" : "selector"}
+            className={activeTab === "create-dog" ? "selector active" : "selector"}
             onClick={() => {
-              dogsAreDisplayed ? setDogsAreDisplayed(false) : setDogsAreDisplayed(true);
+              activeTab !== "create-dog"
+                ? setActiveTab("create-dog")
+                : setActiveTab("all-dogs");
             }}
           >
             create dog
@@ -94,13 +77,11 @@ export const FunctionalSection = ({
         </div>
       </div>
       <div className="content-container">
-        {dogsAreDisplayed ? (
+        {activeTab !== "create-dog" ? (
           <FunctionalDogs
             allDogs={allDogs}
             setAllDogs={setAllDogs}
-            dogsAreDisplayed={dogsAreDisplayed}
-            favsAreDisplayed={favsAreDisplayed}
-            setFavsAreDisplayed={setFavsAreDisplayed}
+            activeTab={activeTab}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />

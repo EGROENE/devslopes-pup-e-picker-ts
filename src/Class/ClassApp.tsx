@@ -77,10 +77,6 @@ export class ClassApp extends Component {
             createNewDog={this.createNewDog}
             allDogs={this.state.allDogs}
             setAllDogs={this.setAllDogs}
-            dogsAreDisplayed={this.state.dogsAreDisplayed}
-            setDogsAreDisplayed={this.setDogsAreDisplayed}
-            favsAreDisplayed={this.state.favsAreDisplayed}
-            setFavsAreDisplayed={this.setFavsAreDisplayed}
             isLoading={this.state.isLoading}
             setIsLoading={this.setIsLoading}
           />
