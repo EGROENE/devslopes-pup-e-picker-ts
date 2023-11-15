@@ -62,6 +62,13 @@ export class ClassCreateDogForm extends Component<
   render() {
     const { setAllDogs, isLoading, setIsLoading, setDogsAreDisplayed } = this.props;
 
+    const resetForm = (): void => {
+      this.setNewDogName("");
+      this.setNewDogDescription("");
+      this.setNewDogImage(defaultSelectedImage);
+      setDogsAreDisplayed(true);
+    };
+
     return (
       <form
         action=""
@@ -75,10 +82,7 @@ export class ClassCreateDogForm extends Component<
                 .then(setAllDogs)
                 .then(() => setIsLoading(false))
             )
-            .then(() => this.setNewDogName(""))
-            .then(() => this.setNewDogDescription(""))
-            .then(() => this.setNewDogImage(defaultSelectedImage))
-            .then(() => setDogsAreDisplayed(true))
+            .then(() => resetForm())
             .then(() => toast.success("Dog added!"));
         }}
       >

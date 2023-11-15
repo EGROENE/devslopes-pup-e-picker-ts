@@ -33,6 +33,13 @@ export const FunctionalCreateDogForm = ({
     id: 0,
   };
 
+  const resetForm = (): void => {
+    setNewDogName("");
+    setNewDogDescription("");
+    setNewDogImage(defaultSelectedImage);
+    setDogsAreDisplayed(true);
+  };
+
   return (
     <form
       action=""
@@ -46,10 +53,7 @@ export const FunctionalCreateDogForm = ({
               .then(setAllDogs)
               .then(() => setIsLoading(false))
           )
-          .then(() => setNewDogName(""))
-          .then(() => setNewDogDescription(""))
-          .then(() => setNewDogImage(defaultSelectedImage))
-          .then(() => setDogsAreDisplayed(true))
+          .then(() => resetForm())
           .then(() => toast.success("Dog created!"));
       }}
     >

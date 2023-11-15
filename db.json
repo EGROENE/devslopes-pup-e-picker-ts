@@ -1,17 +1,10 @@
 {
   "dogs": [
     {
-      "name": "Wilber",
-      "image": "/assets/chihuahua.avif",
-      "description": "magenta boo colossal unpleasant seize Tactics Florida",
-      "isFavorite": true,
-      "id": 0
-    },
-    {
       "name": "Roselyn",
       "image": "/assets/chihuahua.avif",
       "description": "Coupe South withdrawal Soft Latin lime Reggae chapter",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 1
     },
     {
@@ -20,13 +13,6 @@
       "description": "ampere Metal lavender Funk Fundamental payment wireless",
       "isFavorite": true,
       "id": 2
-    },
-    {
-      "name": "Shaina",
-      "image": "/assets/corgi.png",
-      "description": "Cotton male Refined Convertible auxiliary",
-      "isFavorite": true,
-      "id": 3
     },
     {
       "name": "Dallin",
@@ -146,6 +132,24 @@
       "image": "/assets/blue-heeler.png",
       "isFavorite": false,
       "id": 20
+    },
+    {
+      "name": "Mitzi",
+      "image": "/assets/chihuahua.avif",
+      "description": "dog of my dad",
+      "id": 21
+    },
+    {
+      "name": "kaiser",
+      "image": "/assets/blue-heeler.png",
+      "description": "",
+      "id": 22
+    },
+    {
+      "name": "buddy",
+      "image": "/assets/blue-heeler.png",
+      "description": "",
+      "id": 23
     }
   ]
 }
