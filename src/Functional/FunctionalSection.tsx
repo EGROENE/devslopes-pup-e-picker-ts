@@ -77,6 +77,7 @@ export const FunctionalSection = ({
         </div>
       </div>
       <div className="content-container">
+        {/* Not sure how to apply React Children here, or what the benefit would be... */}
         {activeTab !== "create-dog" ? (
           <FunctionalDogs
             allDogs={allDogs}
