@@ -1,4 +1,3 @@
-// you can use this type for react children if you so choose
 import { Dispatch, SetStateAction, useState, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Dog, Tab } from "../types";
@@ -78,7 +77,6 @@ export const FunctionalSection = ({
         </div>
       </div>
       <div className="content-container">
-        {/* Not sure how to apply React Children here, or what the benefit would be... */}
         <FunctionalMainContent
           activeTab={activeTab}
           allDogs={allDogs}
