@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { FunctionalSection } from "./FunctionalSection";
 import { Dog } from "../types";
 import { getAllDogs, createDog } from "../Shared/Requests";
 import toast from "react-hot-toast";
 
-export function FunctionalApp() {
+export function FunctionalApp({ children }: { children: ReactNode }) {
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
 
   useEffect(() => {
@@ -38,6 +38,7 @@ export function FunctionalApp() {
       </header>
       <section id="main-section">
         <FunctionalSection
+          children={children}
           createNewDog={createNewDog}
           allDogs={allDogs}
           setAllDogs={setAllDogs}
