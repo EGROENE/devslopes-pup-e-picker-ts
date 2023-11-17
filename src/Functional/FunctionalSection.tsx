@@ -1,11 +1,11 @@
 // you can use this type for react children if you so choose
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Dog, Tab } from "../types";
-import { FunctionalDogs } from "./FunctionalDogs";
-import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
+import { FunctionalMainContent } from "./FunctionalMainContent";
 
 interface FunctionalSectionProps {
+  children: ReactNode;
   createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   allDogs: Dog[];
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
@@ -14,6 +14,7 @@ interface FunctionalSectionProps {
 }
 
 export const FunctionalSection = ({
+  children: children,
   createNewDog: createNewDog,
   allDogs: allDogs,
   setAllDogs: setAllDogs,
@@ -78,17 +79,16 @@ export const FunctionalSection = ({
       </div>
       <div className="content-container">
         {/* Not sure how to apply React Children here, or what the benefit would be... */}
-        {activeTab !== "create-dog" ? (
-          <FunctionalDogs
-            allDogs={allDogs}
-            setAllDogs={setAllDogs}
-            activeTab={activeTab}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-          />
-        ) : (
-          <FunctionalCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />
-        )}
+        <FunctionalMainContent
+          activeTab={activeTab}
+          allDogs={allDogs}
+          setAllDogs={setAllDogs}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          createNewDog={createNewDog}
+        >
+          {children}
+        </FunctionalMainContent>
       </div>
     </>
   );

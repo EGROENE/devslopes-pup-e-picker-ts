@@ -1,15 +1,15 @@
 // you can use `ReactNode` to add a type to the children prop
-import { Component } from "react";
+import { Component, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ClassDogs } from "./ClassDogs";
-import { ClassCreateDogForm } from "./ClassCreateDogForm";
 import { Dog, Tab } from "../types";
+import { ClassMainContent } from "./ClassMainContent";
 
 interface ClassSectionState {
   activeTab: Tab;
 }
 
 interface ClassSectionProps {
+  children: ReactNode;
   createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
   allDogs: Dog[];
   setAllDogs: (newValue: Dog[]) => void;
@@ -31,6 +31,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
 
   render() {
     const {
+      children,
       createNewDog: createNewDog,
       allDogs,
       setAllDogs,
@@ -102,17 +103,16 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
           </div>
         </div>
         <div className="content-container">
-          {this.state.activeTab !== "create-dog" ? (
-            <ClassDogs
-              allDogs={allDogs}
-              setAllDogs={setAllDogs}
-              activeTab={this.state.activeTab}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
-          ) : (
-            <ClassCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />
-          )}
+          <ClassMainContent
+            activeTab={this.state.activeTab}
+            allDogs={allDogs}
+            setAllDogs={setAllDogs}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            createNewDog={createNewDog}
+          >
+            {children}
+          </ClassMainContent>
         </div>
       </>
     );
