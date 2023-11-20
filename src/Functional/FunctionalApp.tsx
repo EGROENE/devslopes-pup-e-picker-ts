@@ -1,10 +1,12 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { FunctionalSection } from "./FunctionalSection";
-import { Dog } from "../types";
+import { FunctionalDogs } from "./FunctionalDogs";
+import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
+import { Dog, Tab } from "../types";
 import { getAllDogs, createDog } from "../Shared/Requests";
 import toast from "react-hot-toast";
 
-export function FunctionalApp({ children }: { children: ReactNode }) {
+export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
 
   useEffect(() => {
@@ -31,21 +33,41 @@ export function FunctionalApp({ children }: { children: ReactNode }) {
       .catch(() => toast.error("Something went wrong. Please try again."));
   };
 
+  // Pass these as props to FunctionalSection:
+  const favsTotal = allDogs.filter((dog) => dog.isFavorite).length;
+  const unfavsTotal = allDogs.filter((dog) => !dog.isFavorite).length;
+
+  const dataHasBeenFetched: boolean = allDogs.length > 0;
+
+  const [activeTab, setActiveTab] = useState<Tab>("all-dogs");
+
   return (
     <div className="App" style={{ backgroundColor: "skyblue" }}>
       <header>
         <h1>pup-e-picker (Functional)</h1>
       </header>
-      <section id="main-section">
-        <FunctionalSection
-          children={children}
-          createNewDog={createNewDog}
-          allDogs={allDogs}
-          setAllDogs={setAllDogs}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
-      </section>
+      {/* Pass as props the things that correspond to the navbar, like counts & activeTab */}
+      <FunctionalSection
+        favsTotal={favsTotal}
+        unfavsTotal={unfavsTotal}
+        dataHasBeenFetched={dataHasBeenFetched}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      >
+        {/* Put logic to render parts of app in here */}
+        {/* These are FunctionalSection's children */}
+        {activeTab !== "create-dog" ? (
+          <FunctionalDogs
+            allDogs={allDogs}
+            setAllDogs={setAllDogs}
+            activeTab={activeTab}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+        ) : (
+          <FunctionalCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />
+        )}
+      </FunctionalSection>
     </div>
   );
 }
