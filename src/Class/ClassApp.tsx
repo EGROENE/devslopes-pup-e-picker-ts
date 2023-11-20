@@ -98,7 +98,7 @@ export class ClassApp extends Component {
             setActiveTab={this.setActiveTab}
           >
             {/* Put logic to render parts of app in here */}
-            {/* These are FunctionalSection's children */}
+            {/* These are ClassSection's children */}
             {this.state.activeTab !== "create-dog" ? (
               <ClassDogs
                 allDogs={this.state.allDogs}
