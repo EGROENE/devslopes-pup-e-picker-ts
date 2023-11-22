@@ -15,6 +15,9 @@ export function FunctionalApp() {
     getAllDogs()
       .then(setAllDogs)
       .finally(() => setIsLoading(false));
+    getAllDogs()
+      .then(setAllDogs)
+      .finally(() => setIsLoading(false));
   }, []);
 
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
