@@ -1,6 +1,6 @@
 // The purpose of this component is to "hardcode" the navbar, then dump whatever children into the rest.
 
-import { Dispatch, ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { Tab } from "../types";
 
@@ -9,7 +9,7 @@ interface FunctionalSectionProps {
   unfavsTotal: number;
   isLoading: boolean;
   activeTab: Tab;
-  setActiveTab: Dispatch<React.SetStateAction<Tab>>;
+  setActiveTab: Dispatch<SetStateAction<Tab>>;
   children: ReactNode;
 }
 
@@ -31,7 +31,7 @@ export const FunctionalSection = ({
           </Link>
           <div className="selectors">
             <button
-              disabled={!isLoading}
+              disabled={isLoading}
               className={activeTab === "fav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "fav-dogs") {
@@ -45,7 +45,7 @@ export const FunctionalSection = ({
               favorited ( {favsTotal} )
             </button>
             <button
-              disabled={!isLoading}
+              disabled={isLoading}
               className={activeTab === "unfav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "unfav-dogs") {
@@ -59,7 +59,7 @@ export const FunctionalSection = ({
               unfavorited ( {unfavsTotal} )
             </button>
             <button
-              disabled={!isLoading}
+              disabled={isLoading}
               className={activeTab === "create-dog" ? "selector active" : "selector"}
               onClick={() => {
                 activeTab !== "create-dog"
