@@ -16,7 +16,7 @@ export class ClassApp extends Component {
     allDogs: [],
     dogsAreDisplayed: true,
     favsAreDisplayed: null,
-    isLoading: false,
+    isLoading: true,
   };
 
   setAllDogs = (newValue: Dog[]): void => {
@@ -48,9 +48,11 @@ export class ClassApp extends Component {
   };
 
   componentDidMount(): void {
-    getAllDogs().then((dogs) => {
-      this.setAllDogs(dogs);
-    });
+    getAllDogs()
+      .then((dogs) => {
+        this.setAllDogs(dogs);
+      })
+      .finally(() => this.setIsLoading(false));
   }
 
   createNewDog = (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => {

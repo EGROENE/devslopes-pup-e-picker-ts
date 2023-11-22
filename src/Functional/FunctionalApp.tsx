@@ -8,10 +8,12 @@ export function FunctionalApp({ children }: { children: ReactNode }) {
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
 
   useEffect(() => {
-    getAllDogs().then(setAllDogs);
+    getAllDogs()
+      .then(setAllDogs)
+      .finally(() => setIsLoading(false));
   }, []);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
   // Define it here b/c it uses a few things from this component, reduces prop drilling
