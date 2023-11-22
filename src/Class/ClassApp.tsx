@@ -8,8 +8,6 @@ import toast from "react-hot-toast";
 
 interface ClassAppState {
   allDogs: Dog[];
-  dogsAreDisplayed: boolean;
-  favsAreDisplayed: boolean | null;
   isLoading: boolean;
   activeTab: Tab;
 }
@@ -17,8 +15,6 @@ interface ClassAppState {
 export class ClassApp extends Component {
   state: ClassAppState = {
     allDogs: [],
-    dogsAreDisplayed: true,
-    favsAreDisplayed: null,
     isLoading: true,
     activeTab: "all-dogs",
   };
@@ -66,17 +62,16 @@ export class ClassApp extends Component {
       .finally(() => this.setIsLoading(false));
   }
 
-  createNewDog = (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => {
-    createDog(newDogCharacteristics)
+  createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
+    return createDog(newDogCharacteristics)
       .then(() => {
-        this.setIsLoading(true);
-        getAllDogs()
-          .then(this.setAllDogs)
-          .then(() => this.setIsLoading(false));
-        toast.success(`${newDogCharacteristics.name} created!`);
-        resetForm();
+        return getAllDogs();
       })
-      .catch(() => toast.error("Something went wrong. Please try again."));
+      .then((dogs) => {
+        this.setAllDogs(dogs);
+        toast.success(`${newDogCharacteristics.name} created!`);
+      })
+      .finally(() => this.setIsLoading(false));
   };
 
   render() {

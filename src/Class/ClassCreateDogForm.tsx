@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { dogPictures } from "../dog-pictures";
 import { Dog } from "../types";
+import toast from "react-hot-toast";
 
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
@@ -11,7 +12,7 @@ interface ClassCreateDogFormState {
 }
 
 interface ClassCreateDogFormProps {
-  createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
+  createNewDog: (newDogCharacteristics: Omit<Dog, "id">) => Promise<unknown>;
   isLoading: boolean;
 }
 
@@ -61,14 +62,13 @@ export class ClassCreateDogForm extends Component<
         id="create-dog-form"
         onSubmit={(e) => {
           e.preventDefault();
-          createNewDog(
-            {
-              description: this.state.newDogDescription,
-              image: this.state.newDogImage,
-              name: this.state.newDogName,
-            },
-            resetForm
-          );
+          createNewDog({
+            description: this.state.newDogDescription,
+            image: this.state.newDogImage,
+            name: this.state.newDogName,
+          })
+            .then(() => resetForm())
+            .catch(() => toast.error("Something went wrong. Please try again."));
         }}
       >
         <h4>Create a New Dog</h4>

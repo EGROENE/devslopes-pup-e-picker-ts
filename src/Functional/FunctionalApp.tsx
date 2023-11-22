@@ -11,6 +11,8 @@ export function FunctionalApp() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const [activeTab, setActiveTab] = useState<Tab>("all-dogs");
+
   useEffect(() => {
     getAllDogs()
       .then(setAllDogs)
@@ -19,27 +21,21 @@ export function FunctionalApp() {
 
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
   // Define it here b/c it uses a few things from this component, reduces prop drilling
-  const createNewDog = (
-    newDogCharacteristics: Omit<Dog, "id">,
-    resetForm: () => void
-  ) => {
-    createDog(newDogCharacteristics)
+  const createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
+    return createDog(newDogCharacteristics)
       .then(() => {
-        setIsLoading(true);
-        getAllDogs()
-          .then(setAllDogs)
-          .then(() => setIsLoading(false));
-        toast.success(`${newDogCharacteristics.name} created!`);
-        resetForm();
+        return getAllDogs();
       })
-      .catch(() => toast.error("Something went wrong. Please try again."));
+      .then((dogs) => {
+        setAllDogs(dogs);
+        toast.success(`${newDogCharacteristics.name} created!`);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   // Pass these as props to FunctionalSection:
   const favsTotal = allDogs.filter((dog) => dog.isFavorite).length;
   const unfavsTotal = allDogs.filter((dog) => !dog.isFavorite).length;
-
-  const [activeTab, setActiveTab] = useState<Tab>("all-dogs");
 
   return (
     <div className="App" style={{ backgroundColor: "skyblue" }}>

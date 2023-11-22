@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { dogPictures } from "../dog-pictures";
 import { Dog } from "../types";
+import toast from "react-hot-toast";
 
 // use this as your default selected image
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 interface FunctionalCreateDogFormProps {
-  createNewDog: (newDogCharacteristics: Omit<Dog, "id">, resetForm: () => void) => void;
+  createNewDog: (newDogCharacteristics: Omit<Dog, "id">) => Promise<unknown>;
   isLoading: boolean;
 }
 
@@ -19,7 +20,7 @@ export const FunctionalCreateDogForm = ({
   const [newDogDescription, setNewDogDescription] = useState<string>("");
 
   /* Defined here b/c it relies on state setters of this component. Things would be cluttered if these states were to be defined in FunctionalApp.jsx */
-  const resetForm = () => {
+  const resetForm = (): void => {
     setNewDogName("");
     setNewDogDescription("");
     setNewDogImage(defaultSelectedImage);
@@ -31,15 +32,13 @@ export const FunctionalCreateDogForm = ({
       id="create-dog-form"
       onSubmit={(e) => {
         e.preventDefault();
-        createNewDog(
-          {
-            description: newDogDescription,
-            image: newDogImage,
-            name: newDogName,
-          },
-          // Form values reset only if dog is successfully created. See definition of createNewDog() in FunctionalApp.jsx
-          resetForm
-        );
+        createNewDog({
+          description: newDogDescription,
+          image: newDogImage,
+          name: newDogName,
+        })
+          .then(() => resetForm())
+          .catch(() => toast.error("Something went wrong. Please try again."));
       }}
     >
       <h4>Create a New Dog</h4>
