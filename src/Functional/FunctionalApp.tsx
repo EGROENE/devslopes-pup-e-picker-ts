@@ -9,11 +9,13 @@ import toast from "react-hot-toast";
 export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
 
-  useEffect(() => {
-    getAllDogs().then(setAllDogs);
-  }, []);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  useEffect(() => {
+    getAllDogs()
+      .then(setAllDogs)
+      .finally(() => setIsLoading(false));
+  }, []);
 
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
   // Define it here b/c it uses a few things from this component, reduces prop drilling
