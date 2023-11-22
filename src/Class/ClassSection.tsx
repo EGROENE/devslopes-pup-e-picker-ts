@@ -31,7 +31,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
 
           <div className="selectors">
             <button
-              disabled={!isLoading}
+              disabled={isLoading}
               className={activeTab === "fav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "fav-dogs") {
@@ -46,7 +46,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
             </button>
 
             <button
-              disabled={!isLoading}
+              disabled={isLoading}
               className={activeTab === "unfav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "unfav-dogs") {
@@ -60,7 +60,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
               unfavorited ( {unfavsTotal} )
             </button>
             <button
-              disabled={!isLoading}
+              disabled={isLoading}
               className={activeTab === "create-dog" ? "selector active" : "selector"}
               onClick={() => {
                 activeTab !== "create-dog"
