@@ -7,7 +7,7 @@ import { Tab } from "../types";
 interface FunctionalSectionProps {
   favsTotal: number;
   unfavsTotal: number;
-  dataHasBeenFetched: boolean;
+  isLoading: boolean;
   activeTab: Tab;
   setActiveTab: Dispatch<React.SetStateAction<Tab>>;
   children: ReactNode;
@@ -16,7 +16,7 @@ interface FunctionalSectionProps {
 export const FunctionalSection = ({
   favsTotal: favsTotal,
   unfavsTotal: unfavsTotal,
-  dataHasBeenFetched: dataHasBeenFetched,
+  isLoading: isLoading,
   activeTab: activeTab,
   setActiveTab: setActiveTab,
   children: children,
@@ -31,7 +31,7 @@ export const FunctionalSection = ({
           </Link>
           <div className="selectors">
             <button
-              disabled={!dataHasBeenFetched}
+              disabled={!isLoading}
               className={activeTab === "fav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "fav-dogs") {
@@ -45,7 +45,7 @@ export const FunctionalSection = ({
               favorited ( {favsTotal} )
             </button>
             <button
-              disabled={!dataHasBeenFetched}
+              disabled={!isLoading}
               className={activeTab === "unfav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "unfav-dogs") {
@@ -59,7 +59,7 @@ export const FunctionalSection = ({
               unfavorited ( {unfavsTotal} )
             </button>
             <button
-              disabled={!dataHasBeenFetched}
+              disabled={!isLoading}
               className={activeTab === "create-dog" ? "selector active" : "selector"}
               onClick={() => {
                 activeTab !== "create-dog"

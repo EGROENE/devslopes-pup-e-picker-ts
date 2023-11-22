@@ -39,8 +39,6 @@ export function FunctionalApp() {
   const favsTotal = allDogs.filter((dog) => dog.isFavorite).length;
   const unfavsTotal = allDogs.filter((dog) => !dog.isFavorite).length;
 
-  const dataHasBeenFetched: boolean = allDogs.length > 0;
-
   const [activeTab, setActiveTab] = useState<Tab>("all-dogs");
 
   return (
@@ -52,9 +50,9 @@ export function FunctionalApp() {
       <FunctionalSection
         favsTotal={favsTotal}
         unfavsTotal={unfavsTotal}
-        dataHasBeenFetched={dataHasBeenFetched}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        isLoading={isLoading}
       >
         {/* Put logic to render parts of app in here */}
         {/* These are FunctionalSection's children */}

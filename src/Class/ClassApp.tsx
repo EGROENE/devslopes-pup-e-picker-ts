@@ -83,8 +83,6 @@ export class ClassApp extends Component {
     const favsTotal = this.state.allDogs.filter((dog) => dog.isFavorite).length;
     const unfavsTotal = this.state.allDogs.filter((dog) => !dog.isFavorite).length;
 
-    const dataHasBeenFetched: boolean = this.state.allDogs.length > 0;
-
     return (
       <div className="App" style={{ backgroundColor: "goldenrod" }}>
         <header>
@@ -95,7 +93,7 @@ export class ClassApp extends Component {
           <ClassSection
             favsTotal={favsTotal}
             unfavsTotal={unfavsTotal}
-            dataHasBeenFetched={dataHasBeenFetched}
+            isLoading={this.state.isLoading}
             activeTab={this.state.activeTab}
             setActiveTab={this.setActiveTab}
           >

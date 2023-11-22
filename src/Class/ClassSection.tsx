@@ -10,21 +10,15 @@ interface ClassSectionProps {
   children: ReactNode;
   favsTotal: number;
   unfavsTotal: number;
-  dataHasBeenFetched: boolean;
+  isLoading: boolean;
   activeTab: Tab;
   setActiveTab: (newValue: Tab) => void;
 }
 
 export class ClassSection extends Component<ClassSectionProps, ClassSectionState> {
   render() {
-    const {
-      children,
-      dataHasBeenFetched,
-      favsTotal,
-      unfavsTotal,
-      activeTab,
-      setActiveTab,
-    } = this.props;
+    const { children, isLoading, favsTotal, unfavsTotal, activeTab, setActiveTab } =
+      this.props;
 
     return (
       <>
@@ -37,7 +31,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
 
           <div className="selectors">
             <button
-              disabled={!dataHasBeenFetched}
+              disabled={!isLoading}
               className={activeTab === "fav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "fav-dogs") {
@@ -52,7 +46,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
             </button>
 
             <button
-              disabled={!dataHasBeenFetched}
+              disabled={!isLoading}
               className={activeTab === "unfav-dogs" ? "selector active" : "selector"}
               onClick={() => {
                 if (activeTab !== "unfav-dogs") {
@@ -66,7 +60,7 @@ export class ClassSection extends Component<ClassSectionProps, ClassSectionState
               unfavorited ( {unfavsTotal} )
             </button>
             <button
-              disabled={!dataHasBeenFetched}
+              disabled={!isLoading}
               className={activeTab === "create-dog" ? "selector active" : "selector"}
               onClick={() => {
                 activeTab !== "create-dog"
