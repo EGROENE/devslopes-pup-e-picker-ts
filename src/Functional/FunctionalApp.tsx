@@ -3,7 +3,7 @@ import { FunctionalSection } from "./FunctionalSection";
 import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 import { Dog, Tab } from "../types";
-import { getAllDogs, createDog } from "../Shared/Requests";
+import { getAllDogs, createDog, deleteDog } from "../Shared/Requests";
 import toast from "react-hot-toast";
 
 export function FunctionalApp() {
@@ -21,6 +21,16 @@ export function FunctionalApp() {
 
   const refetchDogs = (): Promise<void> => {
     return getAllDogs().then(setAllDogs);
+  };
+
+  const removeDog = (dog: Dog): Promise<string> => {
+    setIsLoading(true);
+    return deleteDog(dog.id).then(() =>
+      getAllDogs()
+        .then(refetchDogs)
+        .then(() => toast.error(`${dog.name} removed`))
+        .finally(() => setIsLoading(false))
+    );
   };
 
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
@@ -55,6 +65,7 @@ export function FunctionalApp() {
         {/* These are FunctionalSection's children */}
         {activeTab !== "create-dog" ? (
           <FunctionalDogs
+            removeDog={removeDog}
             allDogs={allDogs}
             setAllDogs={setAllDogs}
             activeTab={activeTab}

@@ -1,15 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import { DogCard } from "../Shared/DogCard";
 import { Dog, Tab } from "../types";
-import {
-  deleteDog,
-  getAllDogs,
-  addToFavorites,
-  removeFromFavorites,
-} from "../Shared/Requests";
-import toast from "react-hot-toast";
+import { getAllDogs, addToFavorites, removeFromFavorites } from "../Shared/Requests";
 
 interface FunctionalDogsProps {
+  removeDog: (dog: Dog) => Promise<string>;
   allDogs: Dog[];
   setAllDogs: Dispatch<SetStateAction<Dog[]>>;
   activeTab: Tab;
@@ -18,11 +13,12 @@ interface FunctionalDogsProps {
 }
 
 export const FunctionalDogs = ({
-  allDogs: allDogs,
-  setAllDogs: setAllDogs,
-  activeTab: activeTab,
-  isLoading: isLoading,
-  setIsLoading: setIsLoading,
+  removeDog,
+  allDogs,
+  setAllDogs,
+  activeTab,
+  isLoading,
+  setIsLoading,
 }: FunctionalDogsProps) => {
   // Set value of displayedDogs (used to populate page w/ dog cards):
   let displayedDogs: Dog[] = allDogs;
@@ -45,16 +41,7 @@ export const FunctionalDogs = ({
             name: dog.name,
           }}
           key={dog.id}
-          onTrashIconClick={() => {
-            deleteDog(String(dog.id))
-              .then(() => setIsLoading(true))
-              .then(() =>
-                getAllDogs()
-                  .then(setAllDogs)
-                  .then(() => setIsLoading(false))
-                  .then(() => toast.error(`${dog.name} removed`))
-              );
-          }}
+          onTrashIconClick={() => removeDog(dog)}
           onHeartClick={() => {
             removeFromFavorites(dog.id)
               .then(() => setIsLoading(true))

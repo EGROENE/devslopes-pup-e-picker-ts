@@ -1,15 +1,10 @@
 import { DogCard } from "../Shared/DogCard";
 import { Component } from "react";
 import { Dog, Tab } from "../types";
-import {
-  getAllDogs,
-  deleteDog,
-  addToFavorites,
-  removeFromFavorites,
-} from "../Shared/Requests";
-import toast from "react-hot-toast";
+import { getAllDogs, addToFavorites, removeFromFavorites } from "../Shared/Requests";
 
 interface ClassDogsProps {
+  removeDog: (dog: Dog) => Promise<string>;
   allDogs: Dog[];
   setAllDogs: (newValue: Dog[]) => void;
   activeTab: Tab;
@@ -19,7 +14,8 @@ interface ClassDogsProps {
 
 export class ClassDogs extends Component<ClassDogsProps> {
   render() {
-    const { allDogs, setAllDogs, activeTab, isLoading, setIsLoading } = this.props;
+    const { allDogs, setAllDogs, activeTab, isLoading, setIsLoading, removeDog } =
+      this.props;
 
     let displayedDogs: Dog[] = allDogs;
     if (activeTab === "fav-dogs") {
@@ -41,16 +37,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
               name: dog.name,
             }}
             key={dog.id}
-            onTrashIconClick={() => {
-              deleteDog(String(dog.id))
-                .then(() => setIsLoading(true))
-                .then(() =>
-                  getAllDogs()
-                    .then(setAllDogs)
-                    .then(() => setIsLoading(false))
-                    .then(() => toast.error(`${dog.name} removed`))
-                );
-            }}
+            onTrashIconClick={() => removeDog(dog)}
             onHeartClick={() => {
               removeFromFavorites(dog.id)
                 .then(() => setIsLoading(true))

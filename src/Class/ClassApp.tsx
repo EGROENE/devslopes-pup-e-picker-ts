@@ -3,7 +3,7 @@ import { ClassSection } from "./ClassSection";
 import { ClassDogs } from "./ClassDogs";
 import { ClassCreateDogForm } from "./ClassCreateDogForm";
 import { Dog, Tab } from "../types";
-import { getAllDogs, createDog } from "../Shared/Requests";
+import { getAllDogs, createDog, deleteDog } from "../Shared/Requests";
 import toast from "react-hot-toast";
 
 interface ClassAppState {
@@ -66,6 +66,16 @@ export class ClassApp extends Component {
     return getAllDogs().then(this.setAllDogs);
   };
 
+  removeDog = (dog: Dog): Promise<string> => {
+    this.setIsLoading(true);
+    return deleteDog(dog.id).then(() =>
+      getAllDogs()
+        .then(this.refetchDogs)
+        .then(() => toast.error(`${dog.name} removed`))
+        .finally(() => this.setIsLoading(false))
+    );
+  };
+
   createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
     return createDog(newDogCharacteristics)
       .then(this.refetchDogs)
@@ -97,6 +107,7 @@ export class ClassApp extends Component {
             {/* These are ClassSection's children */}
             {this.state.activeTab !== "create-dog" ? (
               <ClassDogs
+                removeDog={this.removeDog}
                 allDogs={this.state.allDogs}
                 setAllDogs={this.setAllDogs}
                 activeTab={this.state.activeTab}
