@@ -72,7 +72,7 @@ export class ClassApp extends Component {
     return getAllDogs().then(this.setAllDogs);
   };
 
-  removeDog = (dog: Dog): Promise<string> => {
+  deleteDogAction = (dog: Dog): Promise<string> => {
     this.setIsLoading(true);
     return deleteDog(dog.id).then(() =>
       getAllDogs()
@@ -131,7 +131,7 @@ export class ClassApp extends Component {
             {/* These are ClassSection's children */}
             {this.state.activeTab !== "create-dog" ? (
               <ClassDogs
-                removeDog={this.removeDog}
+                deleteDogAction={this.deleteDogAction}
                 allDogs={this.state.allDogs}
                 activeTab={this.state.activeTab}
                 isLoading={this.state.isLoading}

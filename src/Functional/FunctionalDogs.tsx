@@ -2,7 +2,7 @@ import { DogCard } from "../Shared/DogCard";
 import { Dog, Tab } from "../types";
 
 interface FunctionalDogsProps {
-  removeDog: (dog: Dog) => Promise<string>;
+  deleteDogAction: (dog: Dog) => Promise<string>;
   allDogs: Dog[];
   activeTab: Tab;
   isLoading: boolean;
@@ -11,7 +11,7 @@ interface FunctionalDogsProps {
 }
 
 export const FunctionalDogs = ({
-  removeDog,
+  deleteDogAction,
   allDogs,
   activeTab,
   isLoading,
@@ -39,7 +39,7 @@ export const FunctionalDogs = ({
             name: dog.name,
           }}
           key={dog.id}
-          onTrashIconClick={() => removeDog(dog)}
+          onTrashIconClick={() => deleteDogAction(dog)}
           onHeartClick={() => removeFromFavoritesAction(dog)}
           onEmptyHeartClick={() => addToFavoritesAction(dog)}
           isLoading={isLoading}

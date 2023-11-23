@@ -29,7 +29,7 @@ export function FunctionalApp() {
     return getAllDogs().then(setAllDogs);
   };
 
-  const removeDog = (dog: Dog): Promise<string> => {
+  const deleteDogAction = (dog: Dog): Promise<string> => {
     setIsLoading(true);
     return deleteDog(dog.id).then(() =>
       getAllDogs()
@@ -89,7 +89,7 @@ export function FunctionalApp() {
         {/* These are FunctionalSection's children */}
         {activeTab !== "create-dog" ? (
           <FunctionalDogs
-            removeDog={removeDog}
+            deleteDogAction={deleteDogAction}
             allDogs={allDogs}
             activeTab={activeTab}
             isLoading={isLoading}

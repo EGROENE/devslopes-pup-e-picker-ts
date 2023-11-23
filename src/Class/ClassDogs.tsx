@@ -3,7 +3,7 @@ import { Component } from "react";
 import { Dog, Tab } from "../types";
 
 interface ClassDogsProps {
-  removeDog: (dog: Dog) => Promise<string>;
+  deleteDogAction: (dog: Dog) => Promise<string>;
   allDogs: Dog[];
   activeTab: Tab;
   isLoading: boolean;
@@ -17,7 +17,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
       allDogs,
       activeTab,
       isLoading,
-      removeDog,
+      deleteDogAction,
       removeFromFavoritesAction,
       addToFavoritesAction,
     } = this.props;
@@ -42,7 +42,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
               name: dog.name,
             }}
             key={dog.id}
-            onTrashIconClick={() => removeDog(dog)}
+            onTrashIconClick={() => deleteDogAction(dog)}
             onHeartClick={() => removeFromFavoritesAction(dog)}
             onEmptyHeartClick={() => addToFavoritesAction(dog)}
             isLoading={isLoading}
