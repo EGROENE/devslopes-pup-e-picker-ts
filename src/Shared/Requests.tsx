@@ -4,7 +4,7 @@ export const getAllDogs = (): Promise<any> => {
   return fetch("http://localhost:3000/dogs").then((response) => response.json());
 };
 
-export const deleteDog = (dogID: string): Promise<Response> => {
+export const deleteDog = (dogID: number): Promise<Response> => {
   var myHeaders = new Headers();
   myHeaders.append("Content-type", "application/json");
 
