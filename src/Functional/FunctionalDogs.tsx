@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { DogCard } from "../Shared/DogCard";
 import { Dog, Tab } from "../types";
-import { getAllDogs, addToFavorites, removeFromFavorites } from "../Shared/Requests";
+import { getAllDogs, addToFavorites } from "../Shared/Requests";
 
 interface FunctionalDogsProps {
   removeDog: (dog: Dog) => Promise<string>;
@@ -10,6 +10,7 @@ interface FunctionalDogsProps {
   activeTab: Tab;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  removeFromFavoritesAction: (dog: Dog) => Promise<void>;
 }
 
 export const FunctionalDogs = ({
@@ -19,6 +20,7 @@ export const FunctionalDogs = ({
   activeTab,
   isLoading,
   setIsLoading,
+  removeFromFavoritesAction,
 }: FunctionalDogsProps) => {
   // Set value of displayedDogs (used to populate page w/ dog cards):
   let displayedDogs: Dog[] = allDogs;
@@ -42,15 +44,7 @@ export const FunctionalDogs = ({
           }}
           key={dog.id}
           onTrashIconClick={() => removeDog(dog)}
-          onHeartClick={() => {
-            removeFromFavorites(dog.id)
-              .then(() => setIsLoading(true))
-              .then(() =>
-                getAllDogs()
-                  .then(setAllDogs)
-                  .then(() => setIsLoading(false))
-              );
-          }}
+          onHeartClick={() => removeFromFavoritesAction(dog)}
           onEmptyHeartClick={() => {
             addToFavorites(dog.id)
               .then(() => setIsLoading(true))

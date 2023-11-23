@@ -3,7 +3,13 @@ import { FunctionalSection } from "./FunctionalSection";
 import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 import { Dog, Tab } from "../types";
-import { getAllDogs, createDog, deleteDog } from "../Shared/Requests";
+import {
+  getAllDogs,
+  createDog,
+  deleteDog,
+  addToFavorites,
+  removeFromFavorites,
+} from "../Shared/Requests";
 import toast from "react-hot-toast";
 
 export function FunctionalApp() {
@@ -30,6 +36,15 @@ export function FunctionalApp() {
         .then(refetchDogs)
         .then(() => toast.error(`${dog.name} removed`))
         .finally(() => setIsLoading(false))
+    );
+  };
+
+  const removeFromFavoritesAction = (dog: Dog): Promise<void> => {
+    setIsLoading(true);
+    return removeFromFavorites(dog.id).then(() =>
+      getAllDogs()
+        .then(setAllDogs)
+        .then(() => setIsLoading(false))
     );
   };
 
@@ -71,6 +86,7 @@ export function FunctionalApp() {
             activeTab={activeTab}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+            removeFromFavoritesAction={removeFromFavoritesAction}
           />
         ) : (
           <FunctionalCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />

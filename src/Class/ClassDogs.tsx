@@ -10,12 +10,20 @@ interface ClassDogsProps {
   activeTab: Tab;
   isLoading: boolean;
   setIsLoading: (newValue: boolean) => void;
+  removeFromFavoritesAction: (dog: Dog) => Promise<void>;
 }
 
 export class ClassDogs extends Component<ClassDogsProps> {
   render() {
-    const { allDogs, setAllDogs, activeTab, isLoading, setIsLoading, removeDog } =
-      this.props;
+    const {
+      allDogs,
+      setAllDogs,
+      activeTab,
+      isLoading,
+      setIsLoading,
+      removeDog,
+      removeFromFavoritesAction,
+    } = this.props;
 
     let displayedDogs: Dog[] = allDogs;
     if (activeTab === "fav-dogs") {
@@ -38,15 +46,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
             }}
             key={dog.id}
             onTrashIconClick={() => removeDog(dog)}
-            onHeartClick={() => {
-              removeFromFavorites(dog.id)
-                .then(() => setIsLoading(true))
-                .then(() =>
-                  getAllDogs()
-                    .then(setAllDogs)
-                    .then(() => setIsLoading(false))
-                );
-            }}
+            onHeartClick={() => removeFromFavoritesAction(dog)}
             onEmptyHeartClick={() => {
               addToFavorites(dog.id)
                 .then(() => setIsLoading(true))

@@ -3,7 +3,13 @@ import { ClassSection } from "./ClassSection";
 import { ClassDogs } from "./ClassDogs";
 import { ClassCreateDogForm } from "./ClassCreateDogForm";
 import { Dog, Tab } from "../types";
-import { getAllDogs, createDog, deleteDog } from "../Shared/Requests";
+import {
+  getAllDogs,
+  createDog,
+  deleteDog,
+  removeFromFavorites,
+  addToFavorites,
+} from "../Shared/Requests";
 import toast from "react-hot-toast";
 
 interface ClassAppState {
@@ -76,6 +82,15 @@ export class ClassApp extends Component {
     );
   };
 
+  removeFromFavoritesAction = (dog: Dog): Promise<void> => {
+    this.setIsLoading(true);
+    return removeFromFavorites(dog.id).then(() =>
+      getAllDogs()
+        .then(this.setAllDogs)
+        .then(() => this.setIsLoading(false))
+    );
+  };
+
   createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
     return createDog(newDogCharacteristics)
       .then(this.refetchDogs)
@@ -113,6 +128,7 @@ export class ClassApp extends Component {
                 activeTab={this.state.activeTab}
                 isLoading={this.state.isLoading}
                 setIsLoading={this.setIsLoading}
+                removeFromFavoritesAction={this.removeFromFavoritesAction}
               />
             ) : (
               <ClassCreateDogForm
