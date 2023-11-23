@@ -62,7 +62,7 @@ export class ClassApp extends Component {
       .finally(() => this.setIsLoading(false));
   }
 
-  refetchDogs = () => {
+  refetchDogs = (): Promise<void> => {
     return getAllDogs().then(this.setAllDogs);
   };
 
