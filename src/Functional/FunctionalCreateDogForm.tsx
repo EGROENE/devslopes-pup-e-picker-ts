@@ -12,8 +12,8 @@ interface FunctionalCreateDogFormProps {
 }
 
 export const FunctionalCreateDogForm = ({
-  createNewDog: createNewDog,
-  isLoading: isLoading,
+  createNewDog,
+  isLoading,
 }: FunctionalCreateDogFormProps) => {
   const [newDogName, setNewDogName] = useState<string>("");
   const [newDogImage, setNewDogImage] = useState<string>(defaultSelectedImage);

@@ -14,12 +14,12 @@ interface FunctionalSectionProps {
 }
 
 export const FunctionalSection = ({
-  favsTotal: favsTotal,
-  unfavsTotal: unfavsTotal,
-  isLoading: isLoading,
-  activeTab: activeTab,
-  setActiveTab: setActiveTab,
-  children: children,
+  favsTotal,
+  unfavsTotal,
+  isLoading,
+  activeTab,
+  setActiveTab,
+  children,
 }: FunctionalSectionProps) => {
   return (
     <>
