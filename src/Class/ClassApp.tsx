@@ -91,6 +91,15 @@ export class ClassApp extends Component {
     );
   };
 
+  addToFavoritesAction = (dog: Dog): Promise<void> => {
+    this.setIsLoading(true);
+    return addToFavorites(dog.id).then(() =>
+      getAllDogs()
+        .then(this.setAllDogs)
+        .then(() => this.setIsLoading(false))
+    );
+  };
+
   createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
     return createDog(newDogCharacteristics)
       .then(this.refetchDogs)
@@ -124,11 +133,10 @@ export class ClassApp extends Component {
               <ClassDogs
                 removeDog={this.removeDog}
                 allDogs={this.state.allDogs}
-                setAllDogs={this.setAllDogs}
                 activeTab={this.state.activeTab}
                 isLoading={this.state.isLoading}
-                setIsLoading={this.setIsLoading}
                 removeFromFavoritesAction={this.removeFromFavoritesAction}
+                addToFavoritesAction={this.addToFavoritesAction}
               />
             ) : (
               <ClassCreateDogForm

@@ -48,6 +48,15 @@ export function FunctionalApp() {
     );
   };
 
+  const addToFavoritesAction = (dog: Dog): Promise<void> => {
+    setIsLoading(true);
+    return addToFavorites(dog.id).then(() =>
+      getAllDogs()
+        .then(setAllDogs)
+        .then(() => setIsLoading(false))
+    );
+  };
+
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
   // Define it here b/c it uses a few things from this component, reduces prop drilling
   const createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
@@ -82,11 +91,10 @@ export function FunctionalApp() {
           <FunctionalDogs
             removeDog={removeDog}
             allDogs={allDogs}
-            setAllDogs={setAllDogs}
             activeTab={activeTab}
             isLoading={isLoading}
-            setIsLoading={setIsLoading}
             removeFromFavoritesAction={removeFromFavoritesAction}
+            addToFavoritesAction={addToFavoritesAction}
           />
         ) : (
           <FunctionalCreateDogForm createNewDog={createNewDog} isLoading={isLoading} />

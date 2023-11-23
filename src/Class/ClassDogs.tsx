@@ -1,28 +1,25 @@
 import { DogCard } from "../Shared/DogCard";
 import { Component } from "react";
 import { Dog, Tab } from "../types";
-import { getAllDogs, addToFavorites, removeFromFavorites } from "../Shared/Requests";
 
 interface ClassDogsProps {
   removeDog: (dog: Dog) => Promise<string>;
   allDogs: Dog[];
-  setAllDogs: (newValue: Dog[]) => void;
   activeTab: Tab;
   isLoading: boolean;
-  setIsLoading: (newValue: boolean) => void;
   removeFromFavoritesAction: (dog: Dog) => Promise<void>;
+  addToFavoritesAction: (dog: Dog) => Promise<void>;
 }
 
 export class ClassDogs extends Component<ClassDogsProps> {
   render() {
     const {
       allDogs,
-      setAllDogs,
       activeTab,
       isLoading,
-      setIsLoading,
       removeDog,
       removeFromFavoritesAction,
+      addToFavoritesAction,
     } = this.props;
 
     let displayedDogs: Dog[] = allDogs;
@@ -47,15 +44,7 @@ export class ClassDogs extends Component<ClassDogsProps> {
             key={dog.id}
             onTrashIconClick={() => removeDog(dog)}
             onHeartClick={() => removeFromFavoritesAction(dog)}
-            onEmptyHeartClick={() => {
-              addToFavorites(dog.id)
-                .then(() => setIsLoading(true))
-                .then(() =>
-                  getAllDogs()
-                    .then(setAllDogs)
-                    .then(() => setIsLoading(false))
-                );
-            }}
+            onEmptyHeartClick={() => addToFavoritesAction(dog)}
             isLoading={isLoading}
           />
         ))}
