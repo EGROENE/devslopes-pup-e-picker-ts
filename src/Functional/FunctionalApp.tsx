@@ -19,15 +19,16 @@ export function FunctionalApp() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  const refetchDogs = (): Promise<void> => {
+    return getAllDogs().then(setAllDogs);
+  };
+
   // Method that is called onSubmit of CreateDogForm to create new dog based on user's input:
   // Define it here b/c it uses a few things from this component, reduces prop drilling
   const createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
     return createDog(newDogCharacteristics)
+      .then(refetchDogs)
       .then(() => {
-        return getAllDogs();
-      })
-      .then((dogs) => {
-        setAllDogs(dogs);
         toast.success(`${newDogCharacteristics.name} created!`);
       })
       .finally(() => setIsLoading(false));

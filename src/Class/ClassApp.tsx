@@ -62,13 +62,14 @@ export class ClassApp extends Component {
       .finally(() => this.setIsLoading(false));
   }
 
+  refetchDogs = () => {
+    return getAllDogs().then(this.setAllDogs);
+  };
+
   createNewDog = (newDogCharacteristics: Omit<Dog, "id">): Promise<void> => {
     return createDog(newDogCharacteristics)
+      .then(this.refetchDogs)
       .then(() => {
-        return getAllDogs();
-      })
-      .then((dogs) => {
-        this.setAllDogs(dogs);
         toast.success(`${newDogCharacteristics.name} created!`);
       })
       .finally(() => this.setIsLoading(false));
